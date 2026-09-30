@@ -1,15 +1,15 @@
 <!-- AUTO-GENERATED from data/papers.yaml by scripts/build.py — do not edit by hand. -->
 <!-- To change the text around the list, edit templates/README.md.tmpl. -->
 
-# Awesome Event-based Hand Pose Estimation [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+# Awesome Event-based Hands [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
 A curated list of papers on **hands and event cameras**: 3D hand pose / mesh estimation, hand tracking, hand detection and segmentation, hand gesture and sign language recognition, egocentric hand-object action recognition, and the datasets and simulators behind them.
 
-**Searchable version (filter by year, venue, type, task, tag): https://ryhara.github.io/awesome-event-based-hand-pose-estimation/**
+**Searchable version (filter by year, venue, type, task, tag): https://ryhara.github.io/awesome-event-based-hands/**
 
 51 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2021](#2021) · [2020](#2020) · [2019](#2019) · [2017](#2017) · [2014](#2014) · [2011](#2011)
 
-By task: [pose](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/#task=pose) (13) · [mesh](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/#task=mesh) (10) · [tracking](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/#task=tracking) (8) · [detection](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/#task=detection) (5) · [gesture recognition](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/#task=gesture%20recognition) (17) · [sign language](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/#task=sign%20language) (11) · [hand-object](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/#task=hand-object) (4) · [action recognition](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/#task=action%20recognition) (2) · [dataset](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/#task=dataset) (30) · [simulation](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/#task=simulation) (2)
+By task: [pose](https://ryhara.github.io/awesome-event-based-hands/#task=pose) (13) · [mesh](https://ryhara.github.io/awesome-event-based-hands/#task=mesh) (10) · [tracking](https://ryhara.github.io/awesome-event-based-hands/#task=tracking) (8) · [detection](https://ryhara.github.io/awesome-event-based-hands/#task=detection) (5) · [gesture recognition](https://ryhara.github.io/awesome-event-based-hands/#task=gesture%20recognition) (17) · [sign language](https://ryhara.github.io/awesome-event-based-hands/#task=sign%20language) (11) · [hand-object](https://ryhara.github.io/awesome-event-based-hands/#task=hand-object) (4) · [action recognition](https://ryhara.github.io/awesome-event-based-hands/#task=action%20recognition) (2) · [dataset](https://ryhara.github.io/awesome-event-based-hands/#task=dataset) (30) · [simulation](https://ryhara.github.io/awesome-event-based-hands/#task=simulation) (2)
 
 ## Papers
 
@@ -241,13 +241,13 @@ By task: [pose](https://ryhara.github.io/awesome-event-based-hand-pose-estimatio
 
 ## Disclaimer
 
-The entries in this list (titles, authors, venues, years, links, and the BibTeX generated on the [web page](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/)) are maintained by hand and may contain errors or be out of date. **Before citing a paper, always verify the bibliographic details against the official source** (the publisher's DOI page, the conference / journal proceedings, or the arXiv page). The maintainers accept no responsibility for any mistakes in this repository or for any consequences of relying on it.
+The entries in this list (titles, authors, venues, years, links, and the BibTeX generated on the [web page](https://ryhara.github.io/awesome-event-based-hands/)) are maintained by hand and may contain errors or be out of date. **Before citing a paper, always verify the bibliographic details against the official source** (the publisher's DOI page, the conference / journal proceedings, or the arXiv page). The maintainers accept no responsibility for any mistakes in this repository or for any consequences of relying on it.
 
 ## Contributing
 
 Additions and corrections are welcome — open an issue or a pull request.
 
-All papers live in [`data/papers.yaml`](https://github.com/ryhara/awesome-event-based-hand-pose-estimation/blob/main/data/papers.yaml). `README.md` and the [web page](https://ryhara.github.io/awesome-event-based-hand-pose-estimation/) are generated from it by GitHub Actions, so **edit only the YAML file**:
+All papers live in [`data/papers.yaml`](https://github.com/ryhara/awesome-event-based-hands/blob/main/data/papers.yaml). `README.md` and the [web page](https://ryhara.github.io/awesome-event-based-hands/) are generated from it by GitHub Actions, so **edit only the YAML file**:
 
 ```yaml
 - title: Paper Title

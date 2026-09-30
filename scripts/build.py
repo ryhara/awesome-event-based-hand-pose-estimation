@@ -25,7 +25,7 @@ README_OUT = ROOT / "README.md"
 SITE_OUT = ROOT / "site" / "index.html"
 
 # "owner/name"; GitHub Actions sets GITHUB_REPOSITORY, so forks get their own URLs.
-REPO = os.environ.get("GITHUB_REPOSITORY", "ryhara/awesome-event-based-hand-pose-estimation")
+REPO = os.environ.get("GITHUB_REPOSITORY", "ryhara/awesome-event-based-hands")
 
 TYPES = ("conference", "journal", "workshop", "preprint")
 # Controlled vocabulary for the `task` field, in display order.
