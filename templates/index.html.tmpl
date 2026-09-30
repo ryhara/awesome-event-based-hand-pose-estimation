@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Awesome Event-based Hand Pose Estimation</title>
+<meta name="description" content="A curated, filterable list of papers on hand pose estimation, hand mesh reconstruction and hand tracking with event cameras.">
+<style>
+  :root {
+    --bg: #f7f6f3;
+    --surface: #ffffff;
+    --text: #1d1b19;
+    --muted: #6d6862;
+    --border: #e2dfda;
+    --accent: #0b6e66;
+    --accent-soft: #dff1ee;
+    --on-accent: #ffffff;
+    --conference: #1d4fbf;
+    --journal: #7a3bb8;
+    --workshop: #a85a08;
+    --preprint: #5f5a54;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151413;
+      --surface: #1f1d1b;
+      --text: #ebe8e4;
+      --muted: #a29c95;
+      --border: #35322e;
+      --accent: #5fd4c6;
+      --accent-soft: #17332f;
+      --on-accent: #0c1f1d;
+      --conference: #8fb0ff;
+      --journal: #cba4f5;
+      --workshop: #f0b365;
+      --preprint: #b5afa8;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 40px 0 20px; }
+  h1 { margin: 0 0 8px; font-size: clamp(1.5rem, 4.5vw, 2.1rem); line-height: 1.2; letter-spacing: -0.01em; text-wrap: balance; }
+  .lead { margin: 0; color: var(--muted); max-width: 62ch; }
+  .lead a { white-space: nowrap; }
+
+  .filters {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .search { display: flex; gap: 8px; }
+  .search input {
+    flex: 1;
+    min-width: 0;
+    padding: 9px 12px;
+    font: inherit;
+    color: inherit;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .search input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .facet { display: grid; grid-template-columns: 64px 1fr; gap: 4px 10px; align-items: baseline; margin-top: 12px; }
+  .facet-name { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  .chip {
+    padding: 3px 10px;
+    font-size: 0.88rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+  .chip .n { margin-left: 5px; font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .chip:hover { border-color: var(--accent); }
+  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .chip[aria-pressed="true"] .n { color: inherit; opacity: 0.8; }
+  .chip.empty:not([aria-pressed="true"]) { opacity: 0.4; }
+  .clear { padding: 9px 14px; background: transparent; border: 1px solid var(--border); border-radius: 8px; white-space: nowrap; }
+  .clear:hover { border-color: var(--accent); }
+  .clear[hidden] { display: none; }
+
+  .status { margin: 18px 2px 0; color: var(--muted); font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+  h2 {
+    display: flex; align-items: baseline; gap: 10px;
+    margin: 28px 0 10px; padding-bottom: 6px;
+    font-size: 1.35rem; border-bottom: 1px solid var(--border);
+    font-variant-numeric: tabular-nums;
+  }
+  h2 small { font-size: 0.85rem; font-weight: 400; color: var(--muted); }
+  ul.papers { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .paper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px 13px;
+  }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 0.82rem; }
+  .venue { font-weight: 700; letter-spacing: 0.01em; }
+  .venue.conference { color: var(--conference); }
+  .venue.journal { color: var(--journal); }
+  .venue.workshop { color: var(--workshop); }
+  .venue.preprint { color: var(--preprint); }
+  .kind, .tags { color: var(--muted); }
+  .paper h3 { margin: 3px 0 2px; font-size: 1.04rem; line-height: 1.35; font-weight: 650; overflow-wrap: anywhere; }
+  .authors { margin: 0; color: var(--muted); font-size: 0.92rem; }
+  .links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+  .links a {
+    padding: 2px 10px;
+    font-size: 0.84rem; font-weight: 600;
+    text-decoration: none;
+    background: var(--accent-soft);
+    border-radius: 6px;
+  }
+  .links a:hover { text-decoration: underline; }
+  .none { margin: 32px 0; text-align: center; color: var(--muted); }
+
+  footer { margin: 40px 0 32px; color: var(--muted); font-size: 0.88rem; }
+
+  @media (max-width: 560px) {
+    header { padding-top: 28px; }
+    .facet { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Awesome Event-based Hand Pose Estimation</h1>
+    <p class="lead">Papers on hand pose estimation, hand mesh reconstruction and hand tracking with event cameras. <a href="__REPO_URL__">View on GitHub</a></p>
+  </header>
+
+  <section class="filters" aria-label="Filters">
+    <div class="search">
+      <input id="q" type="search" placeholder="Search title, author, venue, tag…" aria-label="Search papers" autocomplete="off">
+      <button id="clear" class="clear" type="button" hidden>Clear filters</button>
+    </div>
+    <div id="facets"></div>
+  </section>
+
+  <p id="status" class="status" role="status" aria-live="polite"></p>
+  <main id="list"></main>
+  <noscript><p class="none">This page needs JavaScript. The full list is also available in the <a href="__REPO_URL__#papers">README</a>.</p></noscript>
+
+  <footer>
+    Missing or wrong entry? Edit <a href="__REPO_URL__/blob/main/data/papers.yaml"><code>data/papers.yaml</code></a> and open a pull request.
+  </footer>
+</div>
+
+<script>
+const PAPERS = __PAPERS__;
+const LINK_LABELS = __LINK_LABELS__;
+const TYPE_LABELS = { conference: "Conference", journal: "Journal", workshop: "Workshop", preprint: "Preprint" };
+
+const byCountThenName = (counts) => (a, b) => counts[b] - counts[a] || a.localeCompare(b);
+const FACETS = [
+  { key: "year", name: "Year", values: (p) => [String(p.year)], sort: () => (a, b) => b - a },
+  { key: "type", name: "Type", values: (p) => [p.type], label: (v) => TYPE_LABELS[v],
+    sort: () => (a, b) => Object.keys(TYPE_LABELS).indexOf(a) - Object.keys(TYPE_LABELS).indexOf(b) },
+  { key: "venue", name: "Venue", values: (p) => [p.venue], sort: byCountThenName },
+  { key: "tag", name: "Tag", values: (p) => p.tags, sort: byCountThenName },
+  { key: "link", name: "Has", values: (p) => Object.keys(p.links), label: (v) => LINK_LABELS[v],
+    sort: () => (a, b) => Object.keys(LINK_LABELS).indexOf(a) - Object.keys(LINK_LABELS).indexOf(b), all: true },
+];
+
+const state = { q: "", sel: Object.fromEntries(FACETS.map((f) => [f.key, new Set()])) };
+
+PAPERS.forEach((p) => {
+  p.text = [p.title, p.authors.join(" "), p.venue, p.year, TYPE_LABELS[p.type], p.tags.join(" ")].join(" ").toLowerCase();
+});
+
+const $ = (id) => document.getElementById(id);
+function el(tag, props = {}, children = []) {
+  const node = Object.assign(document.createElement(tag), props);
+  node.append(...children);
+  return node;
+}
+
+// Within a facet, selected values are OR-ed ("Has" requires all of them); facets are AND-ed.
+function matchesFacet(p, f) {
+  const sel = state.sel[f.key];
+  if (!sel.size) return true;
+  const values = f.values(p);
+  return f.all ? [...sel].every((v) => values.includes(v)) : values.some((v) => sel.has(v));
+}
+function matches(p, except) {
+  const terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+  return terms.every((t) => p.text.includes(t)) && FACETS.every((f) => f === except || matchesFacet(p, f));
+}
+
+function renderFacets() {
+  const root = $("facets");
+  root.replaceChildren();
+  for (const f of FACETS) {
+    const total = {};
+    PAPERS.forEach((p) => f.values(p).forEach((v) => (total[v] = (total[v] || 0) + 1)));
+    const values = Object.keys(total).sort(f.sort(total));
+    if (!values.length) continue;
+
+    // Counts reflect the other active filters, so a chip shows what selecting it would add.
+    const pool = PAPERS.filter((p) => matches(p, f.all ? null : f));
+    const count = {};
+    pool.forEach((p) => f.values(p).forEach((v) => (count[v] = (count[v] || 0) + 1)));
+
+    const chips = values.map((v) => {
+      const pressed = state.sel[f.key].has(v);
+      const chip = el("button", { type: "button", className: "chip" + (count[v] ? "" : " empty") }, [
+        f.label ? f.label(v) : v,
+        el("span", { className: "n", textContent: count[v] || 0 }),
+      ]);
+      chip.setAttribute("aria-pressed", pressed);
+      chip.addEventListener("click", () => {
+        pressed ? state.sel[f.key].delete(v) : state.sel[f.key].add(v);
+        update();
+      });
+      return chip;
+    });
+    root.append(el("div", { className: "facet" }, [
+      el("div", { className: "facet-name", textContent: f.name }),
+      el("div", { className: "chips" }, chips),
+    ]));
+  }
+}
+
+function renderPaper(p) {
+  const meta = el("div", { className: "meta" }, [
+    el("span", { className: "venue " + p.type, textContent: `${p.venue} ${p.year}` }),
+    el("span", { className: "kind", textContent: TYPE_LABELS[p.type] }),
+  ]);
+  if (p.tags.length) meta.append(el("span", { className: "tags", textContent: p.tags.map((t) => "#" + t).join("  ") }));
+
+  const links = Object.keys(LINK_LABELS).filter((k) => p.links[k]).map((k) =>
+    el("a", { href: p.links[k], textContent: LINK_LABELS[k], target: "_blank", rel: "noopener" }));
+
+  const item = el("li", { className: "paper" }, [
+    meta,
+    el("h3", { textContent: p.title }),
+    el("p", { className: "authors", textContent: p.authors.join(", ") }),
+  ]);
+  if (links.length) item.append(el("div", { className: "links" }, links));
+  return item;
+}
+
+function renderList() {
+  const shown = PAPERS.filter((p) => matches(p));
+  const root = $("list");
+  root.replaceChildren();
+  const years = [...new Set(shown.map((p) => p.year))].sort((a, b) => b - a);
+  for (const year of years) {
+    const papers = shown.filter((p) => p.year === year);
+    root.append(
+      el("h2", {}, [String(year), el("small", { textContent: papers.length === 1 ? "1 paper" : `${papers.length} papers` })]),
+      el("ul", { className: "papers" }, papers.map(renderPaper)),
+    );
+  }
+  if (!shown.length) root.append(el("p", { className: "none", textContent: "No papers match these filters." }));
+  $("status").textContent = shown.length === PAPERS.length
+    ? `${PAPERS.length} papers`
+    : `${shown.length} of ${PAPERS.length} papers`;
+}
+
+// Filters are mirrored in the URL hash so a filtered view can be shared.
+function writeHash() {
+  const params = new URLSearchParams();
+  if (state.q.trim()) params.set("q", state.q.trim());
+  for (const f of FACETS) if (state.sel[f.key].size) params.set(f.key, [...state.sel[f.key]].join("|"));
+  const hash = params.toString();
+  history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
+}
+function readHash() {
+  const params = new URLSearchParams(location.hash.slice(1));
+  state.q = params.get("q") || "";
+  for (const f of FACETS) state.sel[f.key] = new Set((params.get(f.key) || "").split("|").filter(Boolean));
+  $("q").value = state.q;
+}
+
+function update(fromHash) {
+  if (!fromHash) writeHash();
+  $("clear").hidden = !state.q.trim() && FACETS.every((f) => !state.sel[f.key].size);
+  renderFacets();
+  renderList();
+}
+
+$("q").addEventListener("input", (e) => { state.q = e.target.value; update(); });
+$("clear").addEventListener("click", () => {
+  state.q = "";
+  $("q").value = "";
+  FACETS.forEach((f) => state.sel[f.key].clear());
+  update();
+});
+window.addEventListener("hashchange", () => { readHash(); update(true); });
+
+readHash();
+update(true);
+</script>
+</body>
+</html>

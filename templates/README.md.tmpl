@@ -1,0 +1,41 @@
+<!-- AUTO-GENERATED from data/papers.yaml by scripts/build.py — do not edit by hand. -->
+<!-- To change the text around the list, edit templates/README.md.tmpl. -->
+
+# Awesome Event-based Hand Pose Estimation [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+
+A curated list of papers on **hand pose estimation, hand mesh reconstruction and hand tracking with event cameras**.
+
+**Searchable version (filter by year, venue, type, tag): {{SITE_URL}}**
+
+{{COUNT}} papers · {{TOC}}
+
+## Papers
+
+{{PAPERS}}
+
+## Contributing
+
+Additions and corrections are welcome — open an issue or a pull request.
+
+All papers live in [`data/papers.yaml`]({{REPO_URL}}/blob/main/data/papers.yaml). `README.md` and the [web page]({{SITE_URL}}) are generated from it by GitHub Actions, so **edit only the YAML file**:
+
+```yaml
+- title: Paper Title
+  authors: [First Author, Second Author]
+  venue: CVPR            # short name; use "arXiv" for preprints
+  year: 2024
+  type: conference       # conference | journal | workshop | preprint
+  doi: 10.1109/xxxx      # optional (DOI or URL)
+  project: https://...   # optional
+  arxiv: 2403.07346      # optional (arXiv ID or URL)
+  code: https://...      # optional
+  tags: [egocentric]     # optional
+```
+
+To preview locally:
+
+```bash
+pip install -r requirements.txt
+python scripts/build.py      # writes README.md and site/index.html
+open site/index.html
+```
