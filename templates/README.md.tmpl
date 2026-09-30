@@ -3,15 +3,21 @@
 
 # Awesome Event-based Hand Pose Estimation [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-A curated list of papers on **hand pose estimation, hand mesh reconstruction and hand tracking with event cameras**.
+A curated list of papers on **hands and event cameras**: 3D hand pose / mesh estimation, hand tracking, hand detection and segmentation, hand gesture and sign language recognition, egocentric hand-object action recognition, and the datasets and simulators behind them.
 
-**Searchable version (filter by year, venue, type, tag): {{SITE_URL}}**
+**Searchable version (filter by year, venue, type, task, tag): {{SITE_URL}}**
 
 {{COUNT}} papers · {{TOC}}
+
+By task: {{TASKS}}
 
 ## Papers
 
 {{PAPERS}}
+
+## Disclaimer
+
+The entries in this list (titles, authors, venues, years, links, and the BibTeX generated on the [web page]({{SITE_URL}})) are maintained by hand and may contain errors or be out of date. **Before citing a paper, always verify the bibliographic details against the official source** (the publisher's DOI page, the conference / journal proceedings, or the arXiv page). The maintainers accept no responsibility for any mistakes in this repository or for any consequences of relying on it.
 
 ## Contributing
 
@@ -25,11 +31,14 @@ All papers live in [`data/papers.yaml`]({{REPO_URL}}/blob/main/data/papers.yaml)
   venue: CVPR            # short name; use "arXiv" for preprints
   year: 2024
   type: conference       # conference | journal | workshop | preprint
+  task: [pose, dataset]  # one or more of: pose | mesh | tracking | detection |
+                         #   segmentation | gesture recognition | sign language | action recognition |
+                         #   dataset | simulation
   doi: 10.1109/xxxx      # optional (DOI or URL)
   project: https://...   # optional
   arxiv: 2403.07346      # optional (arXiv ID or URL)
   code: https://...      # optional
-  tags: [egocentric]     # optional
+  tags: [egocentric]     # optional free-form keywords
 ```
 
 To preview locally:

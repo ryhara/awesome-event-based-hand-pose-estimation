@@ -8,6 +8,10 @@
 #     venue: CVPR                       # required, short name (use "arXiv" for preprints)
 #     year: 2024                        # required, publication year
 #     type: conference                  # required: conference | journal | workshop | preprint
+#     task: [pose, dataset]             # required, one or more of the TASKS listed in scripts/build.py:
+#                                       #   pose | mesh | tracking | detection | segmentation |
+#                                       #   gesture recognition | sign language | action recognition |
+#                                       #   dataset | simulation
 #     doi: 10.1109/xxxx                 # optional, DOI or full URL
 #     project: https://...              # optional, project page URL
 #     arxiv: 2403.07346                 # optional, arXiv ID or full URL
@@ -22,6 +26,7 @@
   venue: IEEE Access
   year: 2026
   type: journal
+  task: [mesh, pose, detection, dataset]
   doi: 10.1109/ACCESS.2026.3735008
   project: https://ryhara.github.io/EventEgoHandsV2/
   arxiv: 2609.17189
@@ -33,6 +38,7 @@
   venue: ICPR
   year: 2026
   type: conference
+  task: [pose]
   doi: 10.1007/978-3-032-31404-8_26
   arxiv: 2509.16949
   tags: [pre-training]
@@ -42,6 +48,7 @@
   venue: IEEE Sensors Journal
   year: 2026
   type: journal
+  task: [tracking, pose, dataset]
   doi: 10.1109/JSEN.2026.3661641
   arxiv: 2302.14430
   tags: [tracking]
@@ -51,9 +58,67 @@
   venue: arXiv
   year: 2026
   type: preprint
+  task: [pose, gesture recognition, dataset]
   arxiv: 2605.12297
   code: https://github.com/ZJUWang01/EgoEV-HandPose
   tags: [egocentric, stereo, dataset]
+
+- title: A Multimodal RGB and Events Dataset for Hand Detection in First-Person View
+  authors: [Bharghav Kota, Yulia Sandamirskaya]
+  venue: arXiv
+  year: 2026
+  type: preprint
+  task: [detection, dataset]
+  arxiv: 2606.10790
+  code: https://github.com/SynthSyntax/EventEgoHands
+  tags: [egocentric, synthetic data, rgb-event fusion]  # dataset is named "EventEgoHands" (unrelated to Hara et al.)
+
+- title: "Cooking beyond Frames: A Stereo Event Camera Dataset in the Kitchen"
+  authors: [Chengming Feng, Hesam Araghi, Liming Zheng, Julien Dupeyroux, Xucong Zhang, Jan van Gemert, Nergis Tömen]
+  venue: ECCV
+  year: 2026
+  type: conference
+  task: [action recognition, dataset]
+  project: https://chengmingf.github.io/EventKitchen.github.io/
+  arxiv: 2608.04865
+  code: https://github.com/ChengmingF/EventKitchen_toolkit
+  tags: [egocentric, stereo, hand-object interaction, dataset]  # EventKitchen: cooking activities, also object detection / stereo depth
+
+- title: Real-time human hand tracking and detection from event camera data
+  authors: [Laura Duarte, Michele Polito, Laura Gastaldi, Stefano Pastorelli, Pedro Neto]
+  venue: IEEE Sensors Journal
+  year: 2026
+  type: journal
+  task: [tracking, detection]
+  doi: 10.1109/JSEN.2026.3729077
+  tags: [human-robot collaboration]
+
+- title: A Lightweight Network for Event-Camera-Based Hand Pose Estimation
+  authors: [Yu Guo, Xin He, Xiaoxiao Zhang, Sishun Song]
+  venue: CVIDL
+  year: 2026
+  type: conference
+  task: [pose]
+  doi: 10.1109/CVIDL70130.2026.11637781
+  tags: [lightweight]
+
+- title: "Event-Enhanced Hand Behavior Modeling: Toward Robust Dexterous Hand Motion Transfer"
+  authors: [Shaochen Wang, Kang Chen]
+  venue: IEEE TBIOM
+  year: 2026
+  type: journal
+  task: [hand-object, pose, dataset]
+  doi: 10.1109/TBIOM.2026.3665391
+  tags: [rgb-event fusion, synthetic data, robot hand]
+
+- title: "OpenGlass: Ultra-Low-Power On-Device AI Eyewear with Event-based Vision"
+  authors: [Pietro Bonazzi, Julian Moosmann, Ahmet Celik, Philipp Mayer, Michele Magno]
+  venue: arXiv
+  year: 2026
+  type: preprint
+  task: [gesture recognition]
+  arxiv: 2606.07431
+  tags: [egocentric, wearable]
 
 # ---------------------------------------------------------------- 2025
 - title: "EventEgoHands: Event-based Egocentric 3D Hand Mesh Reconstruction"
@@ -61,6 +126,7 @@
   venue: ICIP
   year: 2025
   type: conference
+  task: [mesh, pose]
   doi: 10.1109/ICIP55913.2025.11084751
   project: https://ryhara.github.io/EventEgoHands/
   arxiv: 2505.19169
@@ -72,9 +138,68 @@
   venue: arXiv
   year: 2025
   type: preprint
+  task: [pose, tracking, dataset]
   arxiv: 2509.13883
   code: https://github.com/zen5x5/EvHand-FPV
   tags: [egocentric, tracking]
+
+- title: "EgoEvGesture: Gesture Recognition Based on Egocentric Event Camera"
+  authors: [Luming Wang, Hao Shi, Xiaoting Yin, Kailun Yang, Kaiwei Wang, Jian Bai]
+  venue: SMC
+  year: 2025
+  type: conference
+  task: [gesture recognition, dataset]
+  doi: 10.1109/SMC58881.2025.11343145
+  arxiv: 2503.12419
+  code: https://github.com/ZJUWang01/EgoEv_Gesture
+  tags: [egocentric]
+
+- title: "LynX: An Event-Based Gesture Dataset for Egocentric Interaction in Extended Reality"
+  authors: [Pietro Bartoli, Varsha Jayaprakash, Julian Moosmann, Philipp Mayer, Franco Zappa, Michele Magno]
+  venue: IWASI
+  year: 2025
+  type: workshop
+  task: [gesture recognition, detection, dataset]
+  doi: 10.1109/IWASI66786.2025.11122013
+  project: https://huggingface.co/datasets/pietroba/Lynx
+  tags: [egocentric, wearable]
+
+- title: "Helios 2.0: A Robust, Ultra-Low Power Gesture Recognition System Optimised for Event-Sensor based Wearables"
+  authors: [Prarthana Bhattacharyya, Joshua Mitton, Ryan Page, Owen Morgan, Oliver Powell, Benjamin Menzies, Gabriel Homewood, Kemi Jacobs, Paolo Baesso, Taru Muhonen, Richard Vigars, Louis Berridge]
+  venue: arXiv
+  year: 2025
+  type: preprint
+  task: [gesture recognition]
+  arxiv: 2503.07825
+  tags: [egocentric, wearable]
+
+- title: EHWGesture - A dataset for multimodal understanding of clinical gestures
+  authors: [Gianluca Amprimo, Alberto Ancilotto, Alessandro Savino, Fabio Quazzolo, Claudia Ferraris, Gabriella Olmo, Elisabetta Farella, Stefano Di Carlo]
+  venue: ICCVW
+  year: 2025
+  type: workshop
+  task: [gesture recognition, dataset]
+  doi: 10.1109/ICCVW69036.2025.00283
+  arxiv: 2509.07525
+  tags: [multimodal, clinical]
+
+- title: "Sign Language Translation using Frame and Event Stream: Benchmark Dataset and Algorithms"
+  authors: [Xiao Wang, Yuehang Li, Fuling Wang, Bo Jiang, Yaowei Wang, Yonghong Tian, Jin Tang, Bin Luo]
+  venue: arXiv
+  year: 2025
+  type: preprint
+  task: [sign language, dataset]
+  arxiv: 2503.06484
+  tags: [rgb-event fusion]
+
+- title: "EvCSLR: Event-Guided Continuous Sign Language Recognition and Benchmark"
+  authors: [Yu Jiang, Yuehang Wang, Siqi Li, Yongji Zhang, Qianren Guo, Qi Chu, Yue Gao]
+  venue: IEEE TMM
+  year: 2025
+  type: journal
+  task: [sign language, dataset]
+  doi: 10.1109/TMM.2024.3521750
+  tags: [rgb-event fusion]
 
 # ---------------------------------------------------------------- 2024
 - title: Complementing Event Streams and RGB Frames for Hand Mesh Reconstruction
@@ -82,6 +207,7 @@
   venue: CVPR
   year: 2024
   type: conference
+  task: [mesh, pose]
   doi: 10.1109/CVPR52733.2024.02356
   arxiv: 2403.07346
   code: https://github.com/AlanJiang98/EvRGBHand
@@ -92,6 +218,7 @@
   venue: TPAMI
   year: 2024
   type: journal
+  task: [pose, mesh, dataset]
   doi: 10.1109/TPAMI.2024.3380648
   arxiv: 2303.02862
   code: https://github.com/AlanJiang98/EvHandPose
@@ -102,6 +229,7 @@
   venue: 3DV
   year: 2024
   type: conference
+  task: [pose, mesh, dataset]
   doi: 10.1109/3DV62453.2024.00008
   project: https://4dqv.mpi-inf.mpg.de/Ev2Hands/
   arxiv: 2312.14157
@@ -113,8 +241,127 @@
   venue: IJCV
   year: 2024
   type: journal
+  task: [mesh, tracking]
   doi: 10.1007/s11263-024-02011-z
   tags: [non-rigid reconstruction]
+
+- title: 3D Hand Sequence Recovery from Real Blurry Images and Event Stream
+  authors: [Joonkyu Park, Gyeongsik Moon, Weipeng Xu, Evan Kaseman, Takaaki Shiratori, Kyoung Mu Lee]
+  venue: ECCV
+  year: 2024
+  type: conference
+  task: [mesh, pose, dataset]
+  doi: 10.1007/978-3-031-73202-7_20
+  project: https://jkpark08.github.io/EBH
+  tags: [rgb-event fusion, motion blur]
+
+- title: "EvSign: Sign Language Recognition and Translation with Streaming Events"
+  authors: [Pengyu Zhang, Hao Yin, Zeren Wang, Wenyue Chen, Shengming Li, Dong Wang, Huchuan Lu, Xu Jia]
+  venue: ECCV
+  year: 2024
+  type: conference
+  task: [sign language, dataset]
+  doi: 10.1007/978-3-031-72652-1_20
+  project: https://zhang-pengyu.github.io/EVSign/
+  arxiv: 2407.12593
+  code: https://github.com/zhang-pengyu/EvSign
+  tags: []
+
+- title: "Event Stream-based Sign Language Translation: A High-Definition Benchmark Dataset and A Novel Baseline"
+  authors: [Shiao Wang, Xiao Wang, Duoqing Yang, Yao Rong, Fuling Wang, Jianing Li, Lin Zhu, Bo Jiang]
+  venue: arXiv
+  year: 2024
+  type: preprint
+  task: [sign language, dataset]
+  arxiv: 2408.10488
+  code: https://github.com/Event-AHU/OpenESL
+  tags: []
+
+- title: "Helios: An extremely low power event-based gesture recognition for always-on smart eyewear"
+  authors: [Prarthana Bhattacharyya, Joshua Mitton, Ryan Page, Owen Morgan, Ben Menzies, Gabriel Homewood, Kemi Jacobs, Paolo Baesso, David Trickett, Chris Mair, Taru Muhonen, Rory Clark, Louis Berridge, Richard Vigars, Iain Wallace]
+  venue: ECCVW
+  year: 2024
+  type: workshop
+  task: [gesture recognition]
+  doi: 10.1007/978-3-031-91989-3_11
+  arxiv: 2407.05206
+  tags: [egocentric, wearable]
+
+- title: "x-RAGE: eXtended Reality - Action & Gesture Events Dataset"
+  authors: [Vivek Parmar, Dwijay Bane, Syed Shakib Sarwar, Kleber Stangherlin, Barbara De Salvo, Manan Suri]
+  venue: arXiv
+  year: 2024
+  type: preprint
+  task: [gesture recognition, dataset]
+  arxiv: 2410.19486
+  code: https://gitlab.com/NVM_IITD_Research/xrage
+  tags: [egocentric]
+
+- title: Event Camera-Based Real-Time Gesture Recognition for Improved Robotic Guidance
+  authors: [Muhammad Aitsam, Sergio Davies, Alessandro Di Nuovo]
+  venue: IJCNN
+  year: 2024
+  type: conference
+  task: [gesture recognition, dataset]
+  doi: 10.1109/IJCNN60899.2024.10650870
+  tags: [human-robot interaction]
+
+- title: Efficient Gesture Recognition on Spiking Convolutional Networks Through Sensor Fusion of Event-Based and Depth Data
+  authors: [Lea Steffen, Thomas Trapp, Arne Roennau, Rüdiger Dillmann]
+  venue: ICRA
+  year: 2024
+  type: conference
+  task: [gesture recognition]
+  doi: 10.1109/ICRA57147.2024.10610824
+  arxiv: 2401.17064
+  tags: [spiking neural network, multimodal]
+
+- title: "EHoA: A Benchmark for Task-Oriented Hand-Object Action Recognition via Event Vision"
+  authors: [Wenkai Chen, Shang-Ching Liu, Jianwei Zhang]
+  venue: IEEE TII
+  year: 2024
+  type: journal
+  task: [hand-object, dataset]
+  doi: 10.1109/TII.2024.3393007
+  tags: [spiking neural network]
+
+- title: Event-based dataset for the detection and classification of manufacturing assembly tasks
+  authors: [Laura Duarte, Pedro Neto]
+  venue: Data in Brief
+  year: 2024
+  type: journal
+  task: [hand-object, dataset]
+  doi: 10.1016/j.dib.2024.110340
+  tags: [manufacturing]
+
+# ---------------------------------------------------------------- 2023
+- title: Sign Language Gesture Recognition and Classification Based on Event Camera with Spiking Neural Networks
+  authors: [Xuena Chen, Li Su, Jinxiu Zhao, Keni Qiu, Na Jiang, Guang Zhai]
+  venue: Electronics
+  year: 2023
+  type: journal
+  task: [sign language, dataset]
+  doi: 10.3390/electronics12040786
+  tags: [spiking neural network]
+
+- title: "QISampling: An Effective Sampling Strategy for Event-Based Sign Language Recognition"
+  authors: [Qi Shi, Zhongfu Ye, Jin Wang, Yueyi Zhang]
+  venue: IEEE SPL
+  year: 2023
+  type: journal
+  task: [sign language]
+  doi: 10.1109/LSP.2023.3289111
+  tags: []
+
+- title: Classification of Primitive Manufacturing Tasks from Filtered Event Data
+  authors: [Laura Duarte, Pedro Neto]
+  venue: J. Manuf. Syst.
+  year: 2023
+  type: journal
+  task: [hand-object]
+  doi: 10.1016/j.jmsy.2023.03.001
+  arxiv: 2303.09558
+  tags: [manufacturing]
 
 # ---------------------------------------------------------------- 2022
 - title: Event-based Non-Rigid Reconstruction from Contours
@@ -122,8 +369,30 @@
   venue: BMVC
   year: 2022
   type: conference
+  task: [mesh, tracking]
   arxiv: 2210.06270
   tags: [non-rigid reconstruction]
+
+- title: "E2(GO)MOTION: Motion Augmented Event Stream for Egocentric Action Recognition"
+  authors: [Chiara Plizzari, Mirco Planamente, Gabriele Goletto, Marco Cannici, Emanuele Gusso, Matteo Matteucci, Barbara Caputo]
+  venue: CVPR
+  year: 2022
+  type: conference
+  task: [action recognition, dataset]
+  doi: 10.1109/CVPR52688.2022.01931
+  arxiv: 2112.03596
+  code: https://github.com/EgocentricVision/N-EPIC-Kitchens
+  tags: [egocentric, hand-object interaction, synthetic data, dataset]  # N-EPIC-Kitchens: EPIC-Kitchens converted to events with Vid2E
+
+- title: "SL-Animals-DVS: event-driven sign language animals dataset"
+  authors: [Ajay Vasudevan, Pablo Negri, Camila Di Ielsi, Bernabe Linares-Barranco, Teresa Serrano-Gotarredona]
+  venue: Pattern Anal. Appl.
+  year: 2022
+  type: journal
+  task: [sign language, dataset]
+  doi: 10.1007/s10044-021-01011-w
+  project: http://www2.imse-cnm.csic.es/neuromorphs/index.php/SL-ANIMALS-DVS-Database
+  tags: []
 
 # ---------------------------------------------------------------- 2021
 - title: "EventHands: Real-Time Neural 3D Hand Pose Estimation from an Event Stream"
@@ -131,6 +400,7 @@
   venue: ICCV
   year: 2021
   type: conference
+  task: [pose, mesh, simulation, dataset]
   doi: 10.1109/ICCV48922.2021.01216
   project: https://4dqv.mpi-inf.mpg.de/EventHands/
   arxiv: 2012.06475
@@ -142,6 +412,7 @@
   venue: CVPRW
   year: 2021
   type: workshop
+  task: [simulation, tracking, mesh]
   doi: 10.1109/CVPRW53098.2021.00143
   project: https://vcai.mpi-inf.mpg.de/projects/Event-based_Non-rigid_3D_Tracking/
   arxiv: 2104.15139
@@ -152,6 +423,119 @@
   venue: Sensor Review
   year: 2021
   type: journal
+  task: [tracking]
   doi: 10.1108/SR-03-2021-0095
   arxiv: 2304.06534
   tags: [tracking]
+
+# ---------------------------------------------------------------- 2020
+- title: Introduction and Analysis of an Event-Based Sign Language Dataset
+  authors: [Ajay Vasudevan, Pablo Negri, Bernabe Linares-Barranco, Teresa Serrano-Gotarredona]
+  venue: FG
+  year: 2020
+  type: conference
+  task: [sign language, dataset]
+  doi: 10.1109/FG47880.2020.00069
+  project: http://www2.imse-cnm.csic.es/neuromorphs/index.php/SL-ANIMALS-DVS-Database
+  tags: []
+
+- title: Graph-Based Spatio-Temporal Feature Learning for Neuromorphic Vision Sensing
+  authors: [Yin Bi, Aaron Chadha, Alhabib Abbas, Eirina Bourtsoulatze, Yiannis Andreopoulos]
+  venue: IEEE TIP
+  year: 2020
+  type: journal
+  task: [sign language]
+  doi: 10.1109/TIP.2020.3023597
+  arxiv: 1910.03579
+  code: https://github.com/PIX2NVS/NVS2Graph
+  tags: [ASL-DVS, graph neural network]
+
+- title: Event-Based Gesture Recognition With Dynamic Background Suppression Using Smartphone Computational Capabilities
+  authors: [Jean-Matthieu Maro, Sio-Hoi Ieng, Ryad Benosman]
+  venue: Frontiers in Neuroscience
+  year: 2020
+  type: journal
+  task: [gesture recognition, dataset]
+  doi: 10.3389/fnins.2020.00275
+  arxiv: 1811.07802
+  tags: [NavGesture, mobile]
+
+- title: "Hand-Gesture Recognition Based on EMG and Event-Based Camera Sensor Fusion: A Benchmark in Neuromorphic Computing"
+  authors: [Enea Ceolini, Charlotte Frenkel, Sumit Bam Shrestha, Gemma Taverni, Lyes Khacef, Melika Payvand, Elisa Donati]
+  venue: Frontiers in Neuroscience
+  year: 2020
+  type: journal
+  task: [gesture recognition, dataset]
+  doi: 10.3389/fnins.2020.00637
+  tags: [multimodal, spiking neural network]
+
+# ---------------------------------------------------------------- 2019
+- title: Graph-Based Object Classification for Neuromorphic Vision Sensing
+  authors: [Yin Bi, Aaron Chadha, Alhabib Abbas, Eirina Bourtsoulatze, Yiannis Andreopoulos]
+  venue: ICCV
+  year: 2019
+  type: conference
+  task: [sign language, dataset]
+  doi: 10.1109/ICCV.2019.00058
+  arxiv: 1908.06648
+  code: https://github.com/PIX2NVS/NVS2Graph
+  tags: [ASL-DVS, graph neural network]
+
+- title: "Space-Time Event Clouds for Gesture Recognition: From RGB Cameras to Event Cameras"
+  authors: [Qinyi Wang, Yexin Zhang, Junsong Yuan, Yilong Lu]
+  venue: WACV
+  year: 2019
+  type: conference
+  task: [gesture recognition]
+  doi: 10.1109/WACV.2019.00199
+  tags: [point cloud]
+
+- title: Incremental Learning of Hand Symbols Using Event-Based Cameras
+  authors: [Iulia Alexandra Lungu, Shih-Chii Liu, Tobi Delbruck]
+  venue: IEEE JETCAS
+  year: 2019
+  type: journal
+  task: [gesture recognition]
+  doi: 10.1109/JETCAS.2019.2951062
+  tags: [incremental learning]
+
+# ---------------------------------------------------------------- 2017
+- title: A Low Power, Fully Event-Based Gesture Recognition System
+  authors: [Arnon Amir, Brian Taba, David Berg, Timothy Melano, Jeffrey McKinstry, Carmelo Di Nolfo, Tapan Nayak, Alexander Andreopoulos, Guillaume Garreau, Marcela Mendoza, Jeff Kusnitz, Michael Debole, Steve Esser, Tobi Delbruck, Myron Flickner, Dharmendra Modha]
+  venue: CVPR
+  year: 2017
+  type: conference
+  task: [gesture recognition, dataset]
+  doi: 10.1109/CVPR.2017.781
+  project: https://research.ibm.com/interactive/dvsgesture/
+  tags: [DVS128 Gesture, neuromorphic hardware]
+
+- title: American Sign Language Alphabet Recognition Using a Neuromorphic Sensor and an Artificial Neural Network
+  authors: [Miguel Rivera-Acosta, Susana Ortega-Cisneros, Jorge Rivera, Federico Sandoval-Ibarra]
+  venue: Sensors
+  year: 2017
+  type: journal
+  task: [sign language]
+  doi: 10.3390/s17102176
+  tags: [FPGA]
+
+# ---------------------------------------------------------------- 2014
+- title: Real-Time Gesture Interface Based on Event-Driven Processing From Stereo Silicon Retinas
+  authors: [Jun Haeng Lee, Tobi Delbruck, Michael Pfeiffer, Paul K. J. Park, Chang-Woo Shin, Hyunsurk Ryu, Byung Chang Kang]
+  venue: IEEE TNNLS
+  year: 2014
+  type: journal
+  task: [gesture recognition, tracking]
+  doi: 10.1109/TNNLS.2014.2308551
+  tags: [stereo]
+
+# ---------------------------------------------------------------- 2011
+- title: Dynamic vision sensor camera based bare hand gesture recognition
+  authors: [Eun Yeong Ahn, Jun Haeng Lee, Tracy Mullen, John Yen]
+  venue: CIMSIVP
+  year: 2011
+  type: conference
+  task: [gesture recognition, detection]
+  doi: 10.1109/CIMSIVP.2011.5949251
+  tags: []
+

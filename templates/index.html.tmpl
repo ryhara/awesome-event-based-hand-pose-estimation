@@ -4,38 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Awesome Event-based Hand Pose Estimation</title>
-<meta name="description" content="A curated, filterable list of papers on hand pose estimation, hand mesh reconstruction and hand tracking with event cameras.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Crect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%23181a19%27/%3E%3Crect x=%273%27 y=%273%27 width=%274.5%27 height=%274.5%27 fill=%27%233ddc78%27/%3E%3Crect x=%278.5%27 y=%273%27 width=%274.5%27 height=%274.5%27 fill=%27%23ff5c5c%27/%3E%3Crect x=%273%27 y=%278.5%27 width=%274.5%27 height=%274.5%27 fill=%27%23ff5c5c%27/%3E%3Crect x=%278.5%27 y=%278.5%27 width=%274.5%27 height=%274.5%27 fill=%27%233ddc78%27/%3E%3C/svg%3E">
+<meta name="description" content="A curated, filterable list of papers on hands and event cameras: hand pose and mesh estimation, tracking, detection, segmentation, gesture and sign language recognition, egocentric action recognition.">
+<script>
+  try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+</script>
 <style>
   :root {
-    --bg: #f7f6f3;
-    --surface: #ffffff;
-    --text: #1d1b19;
-    --muted: #6d6862;
-    --border: #e2dfda;
-    --accent: #0b6e66;
-    --accent-soft: #dff1ee;
-    --on-accent: #ffffff;
-    --conference: #1d4fbf;
-    --journal: #7a3bb8;
-    --workshop: #a85a08;
-    --preprint: #5f5a54;
+    color-scheme: light dark;
+    --bg: light-dark(#f7f6f3, #151413);
+    --surface: light-dark(#ffffff, #1f1d1b);
+    --text: light-dark(#1d1b19, #ebe8e4);
+    --muted: light-dark(#6d6862, #a29c95);
+    --border: light-dark(#e2dfda, #35322e);
+    /* Event-camera polarity: ON events are green, OFF events are red. */
+    --pos: light-dark(#22a55a, #3ddc78);
+    --neg: light-dark(#d9453d, #ff5c5c);
+    --accent: light-dark(#1e7d47, #4ed37f);
+    --accent-soft: light-dark(#e3f3e9, #16301f);
+    --on-accent: light-dark(#ffffff, #08170f);
+    --neg-text: light-dark(#b23a37, #ff7b7b);
+    --neg-soft: light-dark(#fbe9e7, #3a1e1e);
+    --conference: light-dark(#1d4fbf, #8fb0ff);
+    --journal: light-dark(#7a3bb8, #cba4f5);
+    --workshop: light-dark(#a85a08, #f0b365);
+    --preprint: light-dark(#5f5a54, #b5afa8);
+    --task-bg: light-dark(#eae6df, #2e2b28);
+    --task-fg: light-dark(#3a3632, #d9d4cd);
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #151413;
-      --surface: #1f1d1b;
-      --text: #ebe8e4;
-      --muted: #a29c95;
-      --border: #35322e;
-      --accent: #5fd4c6;
-      --accent-soft: #17332f;
-      --on-accent: #0c1f1d;
-      --conference: #8fb0ff;
-      --journal: #cba4f5;
-      --workshop: #f0b365;
-      --preprint: #b5afa8;
-    }
-  }
+  :root[data-theme="light"] { color-scheme: light; }
+  :root[data-theme="dark"] { color-scheme: dark; }
   * { box-sizing: border-box; }
   body {
     margin: 0;
@@ -47,12 +45,43 @@
   a { color: var(--accent); }
   .wrap { max-width: 920px; margin: 0 auto; padding: 0 16px; }
 
-  header { padding: 40px 0 20px; }
-  h1 { margin: 0 0 8px; font-size: clamp(1.5rem, 4.5vw, 2.1rem); line-height: 1.2; letter-spacing: -0.01em; text-wrap: balance; }
+  /* Live event stream behind the page: ambient edges in the hero, plus edges fired by the cursor.
+     Cards have an opaque surface, so events only show through the page background. */
+  #events { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  .hero, .wrap { position: relative; z-index: 1; }
+  .hero { overflow: hidden; }
+  header { position: relative; padding: 44px 0 26px; }
+  .polarity { flex: none; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 0.85em; height: 0.85em; }
+  .polarity i { display: block; border-radius: 12%; background: var(--pos); }
+  .polarity i:nth-child(2), .polarity i:nth-child(3) { background: var(--neg); }
+  h1 {
+    display: flex; align-items: center; gap: 0.45em;
+    margin: 0 0 8px; padding-right: 48px;
+    font-size: clamp(1.5rem, 4.5vw, 2.1rem); line-height: 1.2; letter-spacing: -0.01em; text-wrap: balance;
+  }
+  .theme {
+    position: absolute; top: 16px; right: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; padding: 0;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+  .theme:hover { color: var(--accent); border-color: var(--accent); }
+  .theme svg { width: 18px; height: 18px; }
+  .theme .sun, :root[data-theme="dark"] .theme .moon { display: none; }
+  :root[data-theme="dark"] .theme .sun { display: block; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .theme .sun { display: block; }
+    :root:not([data-theme]) .theme .moon { display: none; }
+  }
+  .hero-rule { height: 2px; background: linear-gradient(to right, var(--pos) 0 50%, var(--neg) 50% 100%); opacity: 0.85; }
   .lead { margin: 0; color: var(--muted); max-width: 62ch; }
   .lead a { white-space: nowrap; }
 
   .filters {
+    margin-top: 22px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -87,7 +116,7 @@
   .chip[aria-pressed="true"] .n { color: inherit; opacity: 0.8; }
   .chip.empty:not([aria-pressed="true"]) { opacity: 0.4; }
   .clear { padding: 9px 14px; background: transparent; border: 1px solid var(--border); border-radius: 8px; white-space: nowrap; }
-  .clear:hover { border-color: var(--accent); }
+  .clear:hover { border-color: var(--neg); color: var(--neg-text); }
   .clear[hidden] { display: none; }
 
   .status { margin: 18px 2px 0; color: var(--muted); font-size: 0.92rem; font-variant-numeric: tabular-nums; }
@@ -97,6 +126,8 @@
     font-size: 1.35rem; border-bottom: 1px solid var(--border);
     font-variant-numeric: tabular-nums;
   }
+  h2::before { content: ""; width: 5px; height: 14px; align-self: center; border-radius: 1px;
+    background: linear-gradient(to bottom, var(--pos) 0 50%, var(--neg) 50% 100%); }
   h2 small { font-size: 0.85rem; font-weight: 400; color: var(--muted); }
   ul.papers { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
   .paper {
@@ -111,21 +142,64 @@
   .venue.journal { color: var(--journal); }
   .venue.workshop { color: var(--workshop); }
   .venue.preprint { color: var(--preprint); }
-  .kind, .tags { color: var(--muted); }
-  .paper h3 { margin: 3px 0 2px; font-size: 1.04rem; line-height: 1.35; font-weight: 650; overflow-wrap: anywhere; }
+  .kind { color: var(--muted); }
+  /* Three visually distinct kinds of chips on a card:
+     task  = filled, uppercase pill (controlled vocabulary, click to filter)
+     #tag  = plain muted hashtag text (free-form keyword, click to filter)
+     link  = outlined button with an arrow (opens an external page) */
+  .task, .tag {
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 999px;
+    line-height: 1.4;
+  }
+  .task {
+    padding: 1px 9px;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--task-fg);
+    background: var(--task-bg);
+  }
+  .task:hover, .tag:hover { color: var(--accent); }
+  .task[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+  .tag { font-size: 0.85rem; color: var(--muted); }
+  .tag[aria-pressed="true"] { color: var(--accent); font-weight: 600; }
+  .tags { display: flex; flex-wrap: wrap; gap: 2px 10px; margin: 6px 0 0; }
+  .paper h3 { margin: 4px 0 2px; font-size: 1.04rem; line-height: 1.35; font-weight: 650; overflow-wrap: anywhere; }
   .authors { margin: 0; color: var(--muted); font-size: 0.92rem; }
-  .links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+  .links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
   .links a {
-    padding: 2px 10px;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px;
     font-size: 0.84rem; font-weight: 600;
     text-decoration: none;
-    background: var(--accent-soft);
+    color: var(--accent);
+    background: var(--surface);
+    border: 1px solid var(--accent);
     border-radius: 6px;
   }
-  .links a:hover { text-decoration: underline; }
+  .links a::after { content: "↗"; font-size: 0.75em; opacity: 0.75; }
+  .links a:hover { background: var(--accent-soft); }
+  /* BibTeX = same outline as a link button, but dashed: it copies rather than navigates. */
+  .bib {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px;
+    font-size: 0.84rem; font-weight: 600;
+    color: var(--accent);
+    background: var(--surface);
+    border: 1px dashed var(--accent);
+    border-radius: 6px;
+  }
+  .bib:hover { background: var(--accent-soft); }
+  .bib svg { width: 13px; height: 13px; flex: none; }
+  .bib[data-done] { color: var(--on-accent); background: var(--accent); border-style: solid; }
   .none { margin: 32px 0; text-align: center; color: var(--muted); }
 
   footer { margin: 40px 0 32px; color: var(--muted); font-size: 0.88rem; }
+  footer p { margin: 0 0 10px; }
+  .disclaimer { padding: 10px 14px; color: var(--text); background: var(--neg-soft); border-left: 3px solid var(--neg); border-radius: 6px; }
+  .disclaimer strong { color: var(--neg-text); }
 
   @media (max-width: 560px) {
     header { padding-top: 28px; }
@@ -134,15 +208,25 @@
 </style>
 </head>
 <body>
+<canvas id="events" aria-hidden="true"></canvas>
+<div class="hero">
+  <div class="wrap">
+    <header>
+      <button id="theme" class="theme" type="button" aria-label="Toggle light / dark theme" title="Toggle light / dark theme">
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <h1><span class="polarity" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Awesome Event-based Hand Pose Estimation</span></h1>
+      <p class="lead">Papers on hands and event cameras: pose and mesh estimation, tracking, detection, segmentation, gesture and sign language recognition, egocentric action recognition, datasets and simulators. <a href="__REPO_URL__">View on GitHub</a></p>
+    </header>
+  </div>
+  <div class="hero-rule"></div>
+</div>
 <div class="wrap">
-  <header>
-    <h1>Awesome Event-based Hand Pose Estimation</h1>
-    <p class="lead">Papers on hand pose estimation, hand mesh reconstruction and hand tracking with event cameras. <a href="__REPO_URL__">View on GitHub</a></p>
-  </header>
 
   <section class="filters" aria-label="Filters">
     <div class="search">
-      <input id="q" type="search" placeholder="Search title, author, venue, tag…" aria-label="Search papers" autocomplete="off">
+      <input id="q" type="search" placeholder="Search title, author, venue, task, tag…" aria-label="Search papers" autocomplete="off">
       <button id="clear" class="clear" type="button" hidden>Clear filters</button>
     </div>
     <div id="facets"></div>
@@ -153,13 +237,15 @@
   <noscript><p class="none">This page needs JavaScript. The full list is also available in the <a href="__REPO_URL__#papers">README</a>.</p></noscript>
 
   <footer>
-    Missing or wrong entry? Edit <a href="__REPO_URL__/blob/main/data/papers.yaml"><code>data/papers.yaml</code></a> and open a pull request.
+    <p class="disclaimer"><strong>Disclaimer.</strong> Entries and the generated BibTeX are maintained by hand and may contain errors. Before citing, always verify the details against the official source (DOI page, proceedings, or arXiv). The maintainers accept no responsibility for any mistakes in this list or for any consequences of relying on it.</p>
+    <p>Missing or wrong entry? Edit <a href="__REPO_URL__/blob/main/data/papers.yaml"><code>data/papers.yaml</code></a> and open a pull request.</p>
   </footer>
 </div>
 
 <script>
 const PAPERS = __PAPERS__;
 const LINK_LABELS = __LINK_LABELS__;
+const TASKS = __TASKS__;
 const TYPE_LABELS = { conference: "Conference", journal: "Journal", workshop: "Workshop", preprint: "Preprint" };
 
 const byCountThenName = (counts) => (a, b) => counts[b] - counts[a] || a.localeCompare(b);
@@ -167,6 +253,7 @@ const FACETS = [
   { key: "year", name: "Year", values: (p) => [String(p.year)], sort: () => (a, b) => b - a },
   { key: "type", name: "Type", values: (p) => [p.type], label: (v) => TYPE_LABELS[v],
     sort: () => (a, b) => Object.keys(TYPE_LABELS).indexOf(a) - Object.keys(TYPE_LABELS).indexOf(b) },
+  { key: "task", name: "Task", values: (p) => p.task, sort: () => (a, b) => TASKS.indexOf(a) - TASKS.indexOf(b) },
   { key: "venue", name: "Venue", values: (p) => [p.venue], sort: byCountThenName },
   { key: "tag", name: "Tag", values: (p) => p.tags, sort: byCountThenName },
   { key: "link", name: "Has", values: (p) => Object.keys(p.links), label: (v) => LINK_LABELS[v],
@@ -176,7 +263,7 @@ const FACETS = [
 const state = { q: "", sel: Object.fromEntries(FACETS.map((f) => [f.key, new Set()])) };
 
 PAPERS.forEach((p) => {
-  p.text = [p.title, p.authors.join(" "), p.venue, p.year, TYPE_LABELS[p.type], p.tags.join(" ")].join(" ").toLowerCase();
+  p.text = [p.title, p.authors.join(" "), p.venue, p.year, TYPE_LABELS[p.type], p.task.join(" "), p.tags.join(" ")].join(" ").toLowerCase();
 });
 
 const $ = (id) => document.getElementById(id);
@@ -232,12 +319,94 @@ function renderFacets() {
   }
 }
 
+// BibTeX: conference/workshop -> @inproceedings, journal -> @article, preprint -> @misc (arXiv).
+const ascii = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/gi, "").toLowerCase();
+function bibtex(p) {
+  const first = p.authors[0] || "anon";
+  const lastName = first.trim().split(/\s+/).pop();
+  const firstWord = (p.title.match(/[A-Za-z][A-Za-z0-9]*/g) || []).find((w) => !/^(a|an|the|on|of|for|in|to|and|with|from|via|towards?)$/i.test(w)) || "paper";
+  const key = ascii(lastName) + p.year + ascii(firstWord);
+  const arxivId = (p.links.arxiv || "").match(/arxiv\.org\/(?:abs|pdf)\/([^\s?#]+?)(?:\.pdf)?$/)?.[1];
+  const doi = (p.links.doi || "").match(/doi\.org\/(.+)$/)?.[1];
+
+  let kind, fields;
+  if (p.type === "journal") {
+    kind = "article";
+    fields = [["journal", p.venue]];
+  } else if (p.type === "preprint") {
+    kind = "misc";
+    fields = arxivId
+      ? [["eprint", arxivId], ["archivePrefix", "arXiv"], ["howpublished", `arXiv preprint arXiv:${arxivId}`]]
+      : [["howpublished", p.venue]];
+  } else {
+    kind = "inproceedings";
+    fields = [["booktitle", p.venue]];
+  }
+  fields = [["title", `{${p.title}}`], ["author", p.authors.join(" and ")], ...fields, ["year", String(p.year)]];
+  if (doi) fields.push(["doi", doi]);
+  else if (p.type !== "preprint" && arxivId) fields.push(["eprint", arxivId], ["archivePrefix", "arXiv"]);
+
+  const width = Math.max(...fields.map(([k]) => k.length));
+  const body = fields.map(([k, v]) => `  ${k.padEnd(width)} = {${v}}`).join(",\n");
+  return `@${kind}{${key},\n${body}\n}\n`;
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    // Fallback for non-secure contexts / older browsers.
+    const ta = el("textarea", { value: text, readOnly: true });
+    ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+    document.body.append(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+  }
+}
+
+const COPY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+const CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
+function bibButton(p) {
+  const icon = el("span");
+  icon.innerHTML = COPY_ICON;
+  const label = el("span", { textContent: "BibTeX" });
+  const btn = el("button", { type: "button", className: "bib", title: "Copy BibTeX entry (verify against the official source before citing)" }, [icon, label]);
+  let timer;
+  btn.addEventListener("click", async () => {
+    await copyText(bibtex(p));
+    btn.dataset.done = "";
+    icon.innerHTML = CHECK_ICON;
+    label.textContent = "Copied";
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      delete btn.dataset.done;
+      icon.innerHTML = COPY_ICON;
+      label.textContent = "BibTeX";
+    }, 1500);
+  });
+  return btn;
+}
+
+function toggle(key, value) {
+  const sel = state.sel[key];
+  sel.has(value) ? sel.delete(value) : sel.add(value);
+  update();
+}
+function filterChip(className, key, value, text) {
+  const chip = el("button", { type: "button", className, textContent: text, title: `Filter by ${key}: ${value}` });
+  chip.setAttribute("aria-pressed", state.sel[key].has(value));
+  chip.addEventListener("click", () => toggle(key, value));
+  return chip;
+}
+
 function renderPaper(p) {
   const meta = el("div", { className: "meta" }, [
     el("span", { className: "venue " + p.type, textContent: `${p.venue} ${p.year}` }),
     el("span", { className: "kind", textContent: TYPE_LABELS[p.type] }),
+    ...p.task.map((t) => filterChip("task", "task", t, t)),
   ]);
-  if (p.tags.length) meta.append(el("span", { className: "tags", textContent: p.tags.map((t) => "#" + t).join("  ") }));
 
   const links = Object.keys(LINK_LABELS).filter((k) => p.links[k]).map((k) =>
     el("a", { href: p.links[k], textContent: LINK_LABELS[k], target: "_blank", rel: "noopener" }));
@@ -247,7 +416,8 @@ function renderPaper(p) {
     el("h3", { textContent: p.title }),
     el("p", { className: "authors", textContent: p.authors.join(", ") }),
   ]);
-  if (links.length) item.append(el("div", { className: "links" }, links));
+  if (p.tags.length) item.append(el("div", { className: "tags" }, p.tags.map((t) => filterChip("tag", "tag", t, "#" + t))));
+  item.append(el("div", { className: "links" }, [...links, bibButton(p)]));
   return item;
 }
 
@@ -302,6 +472,132 @@ window.addEventListener("hashchange", () => { readHash(); update(true); });
 
 readHash();
 update(true);
+
+// Theme toggle: flips relative to whatever is currently shown; the choice is remembered per browser.
+const systemDark = matchMedia("(prefers-color-scheme: dark)");
+const isDark = () => document.documentElement.dataset.theme === "dark"
+  || (!document.documentElement.dataset.theme && systemDark.matches);
+$("theme").addEventListener("click", () => {
+  const next = isDark() ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem("theme", next); } catch {}
+  dispatchEvent(new Event("themechange"));
+});
+
+// Event stream on a full-viewport canvas. Ambient edges fire inside the hero (denser at the top),
+// and pointer motion fires ON pixels ahead of the cursor with OFF pixels trailing it, like a moving
+// edge seen by an event camera. Sparse and slow so it stays calm; a static frame under
+// prefers-reduced-motion.
+(() => {
+  const canvas = $("events");
+  const ctx = canvas.getContext("2d");
+  const hero = document.querySelector(".hero");
+  const column = document.querySelector("main").closest(".wrap");  // content column: cursor events stay outside it
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const PX = 3;                  // sensor pixel size (css px); events snap to this grid
+  const LIFE = 2600, CURSOR_LIFE = 1300;
+  const RATE = 1 / 8e6;          // ambient edges per ms per css-pixel of hero area (~25/s at 900x220)
+  let w = 0, h = 0, events = [], colors = {}, last = 0, frozen = 0, ptr = null;
+
+  const snap = (v) => Math.round(v / PX) * PX;
+  const readColors = () => {
+    colors = isDark() ? { 1: "#3ddc78", 0: "#ff5c5c" } : { 1: "#22a55a", 0: "#d9453d" };
+  };
+  const resize = () => {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    w = innerWidth; h = innerHeight;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (reduce) draw(frozen);
+  };
+
+  // A short vertical edge: a run of ON pixels, most with an OFF pixel beside them slightly later.
+  const fireEdge = (x, y, now, life = LIFE) => {
+    const n = 3 + Math.floor(Math.random() * 6), dir = Math.random() < 0.5 ? -1 : 1;
+    for (let i = 0; i < n; i++) {
+      const t0 = now + i * 40, py = y + i * PX;
+      events.push({ x, y: py, pol: 1, t0, life });
+      if (Math.random() < 0.7) events.push({ x: x - dir * PX, y: py, pol: 0, t0: t0 + 90, life });
+    }
+  };
+  const fireAmbient = (now) => {
+    const r = hero.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > h) return;
+    // Linear falloff toward the bottom of the hero.
+    const y = r.top + r.height * (1 - Math.sqrt(Math.random()));
+    fireEdge(snap(Math.random() * w), snap(y), now);
+  };
+  // Pointer moved from (ax, ay) to (bx, by): fire along the path, ON ahead of the motion, OFF behind.
+  // Only in the side margins, so the reading area stays quiet.
+  const fireMotion = (ax, ay, bx, by, now) => {
+    const dx = bx - ax, dy = by - ay, d = Math.hypot(dx, dy);
+    if (d < 2) return;
+    const c = column.getBoundingClientRect();
+    const margin = (x) => x < c.left - 8 || x > c.right + 8;
+    if (!margin(ax) && !margin(bx)) return;
+    const n0 = events.length;
+    const nx = dx / d, ny = dy / d;
+    const steps = Math.min(Math.ceil(d / 4), 8);
+    for (let i = 1; i <= steps; i++) {
+      const x = ax + dx * i / steps, y = ay + dy * i / steps;
+      for (let k = 0; k < 2; k++) {
+        const s = (Math.random() - 0.5) * 14;             // spread along the edge (perpendicular to motion)
+        const ex = x - ny * s, ey = y + nx * s;
+        events.push({ x: snap(ex + nx * PX * 2), y: snap(ey + ny * PX * 2), pol: 1, t0: now, life: CURSOR_LIFE });
+        if (Math.random() < 0.8)
+          events.push({ x: snap(ex - nx * PX * (3 + Math.random() * 3)), y: snap(ey - ny * PX * (3 + Math.random() * 3)), pol: 0, t0: now + 60, life: CURSOR_LIFE });
+      }
+    }
+    // Drop the pixels that landed inside the column.
+    events = events.filter((e, i) => i < n0 || margin(e.x));
+  };
+
+  const draw = (now) => {
+    ctx.clearRect(0, 0, w, h);
+    events = events.filter((e) => now - e.t0 < e.life);
+    for (const e of events) {
+      const age = (now - e.t0) / e.life;
+      if (age < 0) continue;
+      ctx.globalAlpha = 0.7 * (1 - age) ** 1.5;
+      ctx.fillStyle = colors[e.pol];
+      ctx.fillRect(e.x, e.y, PX, PX);
+    }
+    ctx.globalAlpha = 1;
+  };
+  const frame = (now) => {
+    const dt = Math.min(now - last, 100);
+    last = now;
+    const r = hero.getBoundingClientRect();
+    let due = r.width * r.height * RATE * dt;
+    for (; due > 0; due--) if (Math.random() < due) fireAmbient(now);
+    draw(now);
+    if (!document.hidden) requestAnimationFrame(frame);
+  };
+
+  readColors();
+  systemDark.addEventListener("change", readColors);
+  addEventListener("themechange", readColors);
+  addEventListener("resize", resize);
+  if (reduce) {
+    frozen = performance.now();
+    resize();
+    const r = hero.getBoundingClientRect();
+    for (let i = 0; i < r.width * r.height * RATE * LIFE; i++) fireAmbient(frozen - Math.random() * LIFE);
+    draw(frozen);
+    return;
+  }
+  resize();
+  addEventListener("pointermove", (e) => {
+    const now = performance.now();
+    if (ptr && now - ptr.t < 250) fireMotion(ptr.x, ptr.y, e.clientX, e.clientY, now);
+    ptr = { x: e.clientX, y: e.clientY, t: now };
+  }, { passive: true });
+  addEventListener("pointerleave", () => { ptr = null; });
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) { last = performance.now(); requestAnimationFrame(frame); } });
+  last = performance.now();
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>

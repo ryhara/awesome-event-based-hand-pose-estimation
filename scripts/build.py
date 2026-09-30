@@ -14,6 +14,7 @@ import os
 import re
 import sys
 from pathlib import Path
+from urllib.parse import quote
 
 import yaml
 
@@ -27,9 +28,23 @@ SITE_OUT = ROOT / "site" / "index.html"
 REPO = os.environ.get("GITHUB_REPOSITORY", "ryhara/awesome-event-based-hand-pose-estimation")
 
 TYPES = ("conference", "journal", "workshop", "preprint")
+# Controlled vocabulary for the `task` field, in display order.
+TASKS = (
+    "pose",                # 2D/3D keypoint estimation
+    "mesh",                # parametric / mesh reconstruction (e.g. MANO)
+    "tracking",            # temporal tracking of hands, fingertips, hand motion
+    "detection",           # bounding boxes / hand presence
+    "segmentation",        # pixel- or event-level hand masks
+    "gesture recognition", # hand gesture / action classification
+    "sign language",       # sign language recognition / translation
+    "hand-object",         # hand-object interaction / manipulation action recognition
+    "action recognition",  # egocentric / hand-object action recognition (hands are the main actor)
+    "dataset",             # papers whose main contribution includes a dataset
+    "simulation",          # event simulators / synthetic data pipelines for hands
+)
 # Link keys in display order -> label shown in README / site.
 LINKS = {"doi": "DOI", "project": "Project", "arxiv": "arXiv", "code": "Code"}
-REQUIRED = ("title", "authors", "venue", "year", "type")
+REQUIRED = ("title", "authors", "venue", "year", "type", "task")
 ALLOWED = set(REQUIRED) | set(LINKS) | {"tags"}
 
 URL_RE = re.compile(r"^https?://\S+$")
@@ -78,6 +93,13 @@ def load_papers() -> list[dict]:
         tags = entry.get("tags", [])
         if not isinstance(tags, list) or not all(isinstance(t, str) and t.strip() for t in tags):
             errors.append(f"{where}: 'tags' must be a list of strings")
+        task = entry.get("task", [])
+        if not isinstance(task, list) or not task or not all(isinstance(t, str) for t in task):
+            errors.append(f"{where}: 'task' must be a non-empty list")
+        else:
+            for t in task:
+                if t.strip() not in TASKS:
+                    errors.append(f"{where}: unknown task '{t}' (allowed: {', '.join(TASKS)})")
         for key in ("title", "venue", "year", "type", *LINKS):
             if key in entry and not isinstance(entry[key], str):
                 errors.append(f"{where}: '{key}' must be a single value")
@@ -116,6 +138,8 @@ def load_papers() -> list[dict]:
                 "venue": entry["venue"].strip(),
                 "year": int(year),
                 "type": entry["type"],
+                # Keep vocabulary order so badges/facets are stable across entries.
+                "task": [t for t in TASKS if t in {x.strip() for x in task}],
                 "tags": [t.strip() for t in tags],
                 "links": links,
             }
@@ -135,16 +159,21 @@ def md_escape(text: str) -> str:
 def render_readme(papers: list[dict], site_url: str) -> str:
     years = sorted({p["year"] for p in papers}, reverse=True)
     toc = " · ".join(f"[{y}](#{y})" for y in years)
+    # Task counts link to the pre-filtered site view.
+    task_count = {t: sum(t in p["task"] for p in papers) for t in TASKS}
+    tasks = " · ".join(
+        f"[{t}]({site_url}#task={quote(t)}) ({n})" for t, n in task_count.items() if n
+    )
 
     blocks = []
     for year in years:
         lines = [f"### {year}", ""]
         for p in (p for p in papers if p["year"] == year):
             links = " ".join(f"[[{label}]]({p['links'][key]})" for key, label in LINKS.items() if key in p["links"])
+            task = "Task: " + ", ".join(p["task"])
             lines.append(f"- `{p['venue']} {p['year']}` **{md_escape(p['title'])}**  ")
-            lines.append(f"  {md_escape(', '.join(p['authors']))}" + ("  " if links else ""))
-            if links:
-                lines.append(f"  {links}")
+            lines.append(f"  {md_escape(', '.join(p['authors']))}  ")
+            lines.append(f"  {links} · {task}" if links else f"  {task}")
             lines.append("")
         blocks.append("\n".join(lines))
 
@@ -154,6 +183,7 @@ def render_readme(papers: list[dict], site_url: str) -> str:
         "REPO_URL": f"https://github.com/{REPO}",
         "COUNT": str(len(papers)),
         "TOC": toc,
+        "TASKS": tasks,
         "PAPERS": "\n".join(blocks).rstrip(),
     }.items():
         out = out.replace("{{" + key + "}}", value)
@@ -168,6 +198,7 @@ def render_site(papers: list[dict]) -> str:
     return (
         out.replace("__REPO_URL__", f"https://github.com/{REPO}")
         .replace("__LINK_LABELS__", labels)
+        .replace("__TASKS__", json.dumps(TASKS))
         .replace("__PAPERS__", data)
     )
 
