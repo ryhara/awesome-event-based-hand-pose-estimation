@@ -28,21 +28,22 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Generate README.md and site/index.html
+      - name: Generate README.md, tasks/*.md and site/
         run: python scripts/build.py
 
       # Pushes made with GITHUB_TOKEN do not trigger another workflow run.
-      - name: Commit regenerated README
+      - name: Commit regenerated README and task pages
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
-          if git diff --quiet -- README.md; then
-            echo "README.md is up to date"
+          # -A also stages task pages that build.py removed because a task has no papers left.
+          git add -A README.md tasks
+          if git diff --cached --quiet; then
+            echo "README.md and tasks/ are up to date"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          git commit -m "docs: regenerate README from data/papers.yaml"
+          git commit -m "docs: regenerate README and task pages from data/papers.yaml"
           git push
 
       - uses: actions/upload-pages-artifact@v5

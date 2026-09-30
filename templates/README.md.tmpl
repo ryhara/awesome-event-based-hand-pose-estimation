@@ -5,11 +5,12 @@
 
 A curated list of papers on **hands and event cameras**: 3D hand pose / mesh estimation, hand tracking, hand detection and segmentation, hand gesture and sign language recognition, egocentric hand-object action recognition, and the datasets and simulators behind them.
 
-**Searchable version (filter by year, venue, type, task, tag): {{SITE_URL}}**
+**Searchable version (filter by year, venue, type, task, tag): {{SITE_URL}}**  
+**Timeline by task (one dot per paper): {{TIMELINE_URL}}**
 
 {{COUNT}} papers · {{TOC}}
 
-By task: {{TASKS}}
+By task (each link is a Markdown page with only that task's papers): {{TASKS}}
 
 ## Papers
 
@@ -23,7 +24,7 @@ The entries in this list (titles, authors, venues, years, links, and the BibTeX 
 
 Additions and corrections are welcome — open an issue or a pull request.
 
-All papers live in [`data/papers.yaml`]({{REPO_URL}}/blob/main/data/papers.yaml). `README.md` and the [web page]({{SITE_URL}}) are generated from it by GitHub Actions, so **edit only the YAML file**:
+All papers live in [`data/papers.yaml`]({{REPO_URL}}/blob/main/data/papers.yaml). `README.md`, the per-task pages in `tasks/` and the [web page]({{SITE_URL}}) are generated from it by GitHub Actions, so **edit only the YAML file**:
 
 ```yaml
 - title: Paper Title
@@ -45,6 +46,6 @@ To preview locally:
 
 ```bash
 pip install -r requirements.txt
-python scripts/build.py      # writes README.md and site/index.html
+python scripts/build.py      # writes README.md, tasks/*.md and site/*.html
 open site/index.html
 ```

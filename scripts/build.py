@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate README.md and site/index.html from data/papers.yaml.
+"""Generate README.md, tasks/*.md, site/index.html and site/timeline.html from data/papers.yaml.
 
 Usage:
     python scripts/build.py          # validate + generate
@@ -22,26 +22,30 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "papers.yaml"
 TEMPLATES = ROOT / "templates"
 README_OUT = ROOT / "README.md"
+TASKS_DIR = ROOT / "tasks"
 SITE_OUT = ROOT / "site" / "index.html"
+TIMELINE_OUT = ROOT / "site" / "timeline.html"
 
 # "owner/name"; GitHub Actions sets GITHUB_REPOSITORY, so forks get their own URLs.
 REPO = os.environ.get("GITHUB_REPOSITORY", "ryhara/awesome-event-based-hands")
 
 TYPES = ("conference", "journal", "workshop", "preprint")
-# Controlled vocabulary for the `task` field, in display order.
-TASKS = (
-    "pose",                # 2D/3D keypoint estimation
-    "mesh",                # parametric / mesh reconstruction (e.g. MANO)
-    "tracking",            # temporal tracking of hands, fingertips, hand motion
-    "detection",           # bounding boxes / hand presence
-    "segmentation",        # pixel- or event-level hand masks
-    "gesture recognition", # hand gesture / action classification
-    "sign language",       # sign language recognition / translation
-    "hand-object",         # hand-object interaction / manipulation action recognition
-    "action recognition",  # egocentric / hand-object action recognition (hands are the main actor)
-    "dataset",             # papers whose main contribution includes a dataset
-    "simulation",          # event simulators / synthetic data pipelines for hands
-)
+# Controlled vocabulary for the `task` field, in display order, with the one-line
+# description shown at the top of each generated tasks/<task>.md.
+TASK_DESCRIPTIONS = {
+    "pose": "2D / 3D hand keypoint estimation from event streams.",
+    "mesh": "Parametric or mesh-based hand reconstruction (e.g. MANO) from events.",
+    "tracking": "Temporal tracking of hands, fingertips and hand motion.",
+    "detection": "Hand detection: bounding boxes and hand presence.",
+    "segmentation": "Pixel- or event-level hand masks.",
+    "gesture recognition": "Hand gesture / hand action classification.",
+    "sign language": "Sign language recognition and translation.",
+    "hand-object": "Hand-object interaction and manipulation.",
+    "action recognition": "Egocentric / hand-object action recognition where hands are the main actor.",
+    "dataset": "Papers whose main contribution includes a dataset.",
+    "simulation": "Event simulators and synthetic data pipelines for hands.",
+}
+TASKS = tuple(TASK_DESCRIPTIONS)
 # Link keys in display order -> label shown in README / site.
 LINKS = {"doi": "DOI", "project": "Project", "arxiv": "arXiv", "code": "Code"}
 REQUIRED = ("title", "authors", "venue", "year", "type", "task")
@@ -156,45 +160,114 @@ def md_escape(text: str) -> str:
     return re.sub(r"([\\`*_\[\]<>|])", r"\\\1", text)
 
 
-def render_readme(papers: list[dict], site_url: str) -> str:
-    years = sorted({p["year"] for p in papers}, reverse=True)
-    toc = " · ".join(f"[{y}](#{y})" for y in years)
-    # Task counts link to the pre-filtered site view.
-    task_count = {t: sum(t in p["task"] for p in papers) for t in TASKS}
-    tasks = " · ".join(
-        f"[{t}]({site_url}#task={quote(t)}) ({n})" for t, n in task_count.items() if n
-    )
+def task_slug(task: str) -> str:
+    """File name (without .md) of the per-task page, e.g. 'gesture recognition' -> 'gesture-recognition'."""
+    return re.sub(r"[^a-z0-9]+", "-", task.lower()).strip("-")
 
+
+def task_md_path(task: str) -> Path:
+    return TASKS_DIR / f"{task_slug(task)}.md"
+
+
+def render_paper_list(papers: list[dict], task_link_prefix: str) -> str:
+    """Markdown list of papers grouped by year (newest first).
+
+    `task_link_prefix` is prepended to `<slug>.md` in the per-entry task links, so
+    the same list works from README.md ("tasks/") and from tasks/*.md ("").
+    """
+    years = sorted({p["year"] for p in papers}, reverse=True)
     blocks = []
     for year in years:
         lines = [f"### {year}", ""]
         for p in (p for p in papers if p["year"] == year):
             links = " ".join(f"[[{label}]]({p['links'][key]})" for key, label in LINKS.items() if key in p["links"])
-            task = "Task: " + ", ".join(p["task"])
+            task = "Task: " + ", ".join(f"[{t}]({task_link_prefix}{task_slug(t)}.md)" for t in p["task"])
             lines.append(f"- `{p['venue']} {p['year']}` **{md_escape(p['title'])}**  ")
             lines.append(f"  {md_escape(', '.join(p['authors']))}  ")
             lines.append(f"  {links} · {task}" if links else f"  {task}")
             lines.append("")
         blocks.append("\n".join(lines))
+    return "\n".join(blocks).rstrip()
 
-    out = (TEMPLATES / "README.md.tmpl").read_text(encoding="utf-8")
-    for key, value in {
-        "SITE_URL": site_url,
-        "REPO_URL": f"https://github.com/{REPO}",
-        "COUNT": str(len(papers)),
-        "TOC": toc,
-        "TASKS": tasks,
-        "PAPERS": "\n".join(blocks).rstrip(),
-    }.items():
+
+def year_toc(papers: list[dict]) -> str:
+    return " · ".join(f"[{y}](#{y})" for y in sorted({p["year"] for p in papers}, reverse=True))
+
+
+def fill_template(name: str, values: dict[str, str]) -> str:
+    out = (TEMPLATES / name).read_text(encoding="utf-8")
+    for key, value in values.items():
         out = out.replace("{{" + key + "}}", value)
     return out
 
 
-def render_site(papers: list[dict]) -> str:
+def render_readme(papers: list[dict], site_url: str) -> str:
+    # Task counts link to the generated per-task Markdown page.
+    task_count = {t: sum(t in p["task"] for p in papers) for t in TASKS}
+    tasks = " · ".join(f"[{t}](tasks/{task_slug(t)}.md) ({n})" for t, n in task_count.items() if n)
+
+    return fill_template(
+        "README.md.tmpl",
+        {
+            "SITE_URL": site_url,
+            "TIMELINE_URL": site_url + "timeline.html",
+            "REPO_URL": f"https://github.com/{REPO}",
+            "COUNT": str(len(papers)),
+            "TOC": year_toc(papers),
+            "TASKS": tasks,
+            "PAPERS": render_paper_list(papers, "tasks/"),
+        },
+    )
+
+
+def render_task(task: str, papers: list[dict], site_url: str) -> str:
+    """One tasks/<task>.md page: papers of this task, plus links to the other task pages."""
+    task_count = {t: sum(t in p["task"] for p in papers) for t in TASKS}
+    others = " · ".join(
+        f"[{t}]({task_slug(t)}.md) ({n})" for t, n in task_count.items() if n and t != task
+    )
+    subset = [p for p in papers if task in p["task"]]
+    return fill_template(
+        "task.md.tmpl",
+        {
+            "TASK": task,
+            "DESCRIPTION": TASK_DESCRIPTIONS[task],
+            "SITE_URL": site_url,
+            "REPO_URL": f"https://github.com/{REPO}",
+            "FILTER_URL": f"{site_url}#task={quote(task)}",
+            "COUNT": str(len(subset)),
+            "TOC": year_toc(subset),
+            "OTHER_TASKS": others,
+            "PAPERS": render_paper_list(subset, ""),
+        },
+    )
+
+
+def write_tasks(papers: list[dict], site_url: str) -> list[Path]:
+    """Write tasks/<task>.md for every task that has at least one paper; remove stale generated pages."""
+    TASKS_DIR.mkdir(parents=True, exist_ok=True)
+    written: list[Path] = []
+    for task in TASKS:
+        if not any(task in p["task"] for p in papers):
+            continue
+        path = task_md_path(task)
+        path.write_text(render_task(task, papers, site_url), encoding="utf-8")
+        written.append(path)
+    # Only delete files we generated ourselves (identified by the header comment).
+    for path in TASKS_DIR.glob("*.md"):
+        if path in written:
+            continue
+        with path.open(encoding="utf-8") as f:
+            if f.readline().startswith("<!-- AUTO-GENERATED"):
+                path.unlink()
+    return written
+
+
+def render_site(papers: list[dict], template: str = "index.html.tmpl") -> str:
     # "</" must not appear inside an inline <script>.
     data = json.dumps(papers, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     labels = json.dumps(LINKS)
-    out = (TEMPLATES / "index.html.tmpl").read_text(encoding="utf-8")
+    out = (TEMPLATES / template).read_text(encoding="utf-8")
     return (
         out.replace("__REPO_URL__", f"https://github.com/{REPO}")
         .replace("__LINK_LABELS__", labels)
@@ -217,9 +290,14 @@ def main() -> None:
     site_url = f"https://{owner.lower()}.github.io/{name}/"
 
     README_OUT.write_text(render_readme(papers, site_url), encoding="utf-8")
+    task_files = write_tasks(papers, site_url)
     SITE_OUT.parent.mkdir(parents=True, exist_ok=True)
     SITE_OUT.write_text(render_site(papers), encoding="utf-8")
-    print(f"Generated {README_OUT.relative_to(ROOT)} and {SITE_OUT.relative_to(ROOT)} ({len(papers)} papers)")
+    TIMELINE_OUT.write_text(render_site(papers, "timeline.html.tmpl"), encoding="utf-8")
+    print(
+        f"Generated {README_OUT.relative_to(ROOT)}, {len(task_files)} pages in {TASKS_DIR.relative_to(ROOT)}/, "
+        f"{SITE_OUT.relative_to(ROOT)} and {TIMELINE_OUT.relative_to(ROOT)} ({len(papers)} papers)"
+    )
 
 
 if __name__ == "__main__":
