@@ -363,6 +363,15 @@
   arxiv: 2303.09558
   tags: [manufacturing]
 
+- title: "EvPlug: Learn a Plug-and-Play Module for Event and Image Fusion"
+  authors: [Jianping Jiang, Xinyu Zhou, Peiqi Duan, Boxin Shi]
+  venue: arXiv
+  year: 2023
+  type: preprint
+  task: [pose]
+  arxiv: 2312.16933
+  tags: [rgb-event fusion]  # evaluated on EvRealHands (3D hand pose) as well as detection / segmentation
+
 # ---------------------------------------------------------------- 2022
 - title: Event-based Non-Rigid Reconstruction from Contours
   authors: [Yuxuan Xue, Haolong Li, Stefan Leutenegger, Jörg Stückler]

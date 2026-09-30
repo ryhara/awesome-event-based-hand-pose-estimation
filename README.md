@@ -7,9 +7,9 @@ A curated list of papers on **hands and event cameras**: 3D hand pose / mesh est
 
 **Searchable version (filter by year, venue, type, task, tag): https://ryhara.github.io/awesome-event-based-hands/**
 
-51 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2021](#2021) · [2020](#2020) · [2019](#2019) · [2017](#2017) · [2014](#2014) · [2011](#2011)
+52 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2021](#2021) · [2020](#2020) · [2019](#2019) · [2017](#2017) · [2014](#2014) · [2011](#2011)
 
-By task: [pose](https://ryhara.github.io/awesome-event-based-hands/#task=pose) (13) · [mesh](https://ryhara.github.io/awesome-event-based-hands/#task=mesh) (10) · [tracking](https://ryhara.github.io/awesome-event-based-hands/#task=tracking) (8) · [detection](https://ryhara.github.io/awesome-event-based-hands/#task=detection) (5) · [gesture recognition](https://ryhara.github.io/awesome-event-based-hands/#task=gesture%20recognition) (17) · [sign language](https://ryhara.github.io/awesome-event-based-hands/#task=sign%20language) (11) · [hand-object](https://ryhara.github.io/awesome-event-based-hands/#task=hand-object) (4) · [action recognition](https://ryhara.github.io/awesome-event-based-hands/#task=action%20recognition) (2) · [dataset](https://ryhara.github.io/awesome-event-based-hands/#task=dataset) (30) · [simulation](https://ryhara.github.io/awesome-event-based-hands/#task=simulation) (2)
+By task: [pose](https://ryhara.github.io/awesome-event-based-hands/#task=pose) (14) · [mesh](https://ryhara.github.io/awesome-event-based-hands/#task=mesh) (10) · [tracking](https://ryhara.github.io/awesome-event-based-hands/#task=tracking) (8) · [detection](https://ryhara.github.io/awesome-event-based-hands/#task=detection) (5) · [gesture recognition](https://ryhara.github.io/awesome-event-based-hands/#task=gesture%20recognition) (17) · [sign language](https://ryhara.github.io/awesome-event-based-hands/#task=sign%20language) (11) · [hand-object](https://ryhara.github.io/awesome-event-based-hands/#task=hand-object) (4) · [action recognition](https://ryhara.github.io/awesome-event-based-hands/#task=action%20recognition) (2) · [dataset](https://ryhara.github.io/awesome-event-based-hands/#task=dataset) (30) · [simulation](https://ryhara.github.io/awesome-event-based-hands/#task=simulation) (2)
 
 ## Papers
 
@@ -156,6 +156,10 @@ By task: [pose](https://ryhara.github.io/awesome-event-based-hands/#task=pose) (
 - `J. Manuf. Syst. 2023` **Classification of Primitive Manufacturing Tasks from Filtered Event Data**  
   Laura Duarte, Pedro Neto  
   [[DOI]](https://doi.org/10.1016/j.jmsy.2023.03.001) [[arXiv]](https://arxiv.org/abs/2303.09558) · Task: hand-object
+
+- `arXiv 2023` **EvPlug: Learn a Plug-and-Play Module for Event and Image Fusion**  
+  Jianping Jiang, Xinyu Zhou, Peiqi Duan, Boxin Shi  
+  [[arXiv]](https://arxiv.org/abs/2312.16933) · Task: pose
 
 ### 2022
 
