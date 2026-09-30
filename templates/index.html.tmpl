@@ -116,6 +116,9 @@
     border-radius: 8px;
   }
   .search input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .timeline-link { margin: 10px 2px 0; font-size: 0.88rem; }
+  .timeline-link a { text-decoration: none; }
+  .timeline-link a:hover { text-decoration: underline; }
   .facet { display: grid; grid-template-columns: 64px 1fr; gap: 4px 10px; align-items: baseline; margin-top: 12px; }
   .facet-name { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -234,7 +237,7 @@
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
       <h1><span class="polarity" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Awesome Event-based Hands</span></h1>
-      <p class="lead">Papers on hands and event cameras: pose and mesh estimation, tracking, detection, segmentation, gesture and sign language recognition, egocentric action recognition, datasets and simulators. <a href="timeline.html">Timeline by task</a> · <a href="__REPO_URL__">View on GitHub</a></p>
+      <p class="lead">Papers on hands and event cameras: pose and mesh estimation, tracking, detection, segmentation, gesture and sign language recognition, egocentric action recognition, datasets and simulators. <a href="__REPO_URL__">View on GitHub</a></p>
     </header>
   </div>
   <div class="hero-rule"></div>
@@ -246,6 +249,7 @@
       <input id="q" type="search" placeholder="Search title, author, venue, task, tag…" aria-label="Search papers" autocomplete="off">
       <button id="clear" class="clear" type="button" hidden>Clear filters</button>
     </div>
+    <p class="timeline-link"><a href="timeline.html">Timeline by task →</a></p>
     <div id="facets"></div>
   </section>
 

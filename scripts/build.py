@@ -210,7 +210,6 @@ def render_readme(papers: list[dict], site_url: str) -> str:
         "README.md.tmpl",
         {
             "SITE_URL": site_url,
-            "TIMELINE_URL": site_url + "timeline.html",
             "REPO_URL": f"https://github.com/{REPO}",
             "COUNT": str(len(papers)),
             "TOC": year_toc(papers),

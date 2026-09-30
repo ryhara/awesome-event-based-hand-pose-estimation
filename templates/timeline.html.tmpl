@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Timeline · Awesome Event-based Hands</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Crect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%23181a19%27/%3E%3Crect x=%273%27 y=%273%27 width=%274.5%27 height=%274.5%27 fill=%27%233ddc78%27/%3E%3Crect x=%278.5%27 y=%273%27 width=%274.5%27 height=%274.5%27 fill=%27%23ff5c5c%27/%3E%3Crect x=%273%27 y=%278.5%27 width=%274.5%27 height=%274.5%27 fill=%27%23ff5c5c%27/%3E%3Crect x=%278.5%27 y=%278.5%27 width=%274.5%27 height=%274.5%27 fill=%27%233ddc78%27/%3E%3C/svg%3E">
-<meta name="description" content="How research on hands and event cameras evolved over time: one dot per paper, one lane per task (pose, mesh, tracking, detection, gesture and sign language recognition, datasets, …).">
+<meta name="description" content="How research on hands and event cameras evolved over time: one card per paper, one lane per task (pose, mesh, tracking, detection, gesture and sign language recognition, datasets, …).">
 <script>
   try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
 </script>
@@ -14,6 +14,7 @@
     color-scheme: light dark;
     --bg: light-dark(#f7f6f3, #151413);
     --surface: light-dark(#ffffff, #1f1d1b);
+    --surface-2: light-dark(#faf9f7, #26241f);
     --text: light-dark(#1d1b19, #ebe8e4);
     --muted: light-dark(#6d6862, #a29c95);
     --border: light-dark(#e2dfda, #35322e);
@@ -45,9 +46,16 @@
   }
   a { color: var(--accent); }
   button { font: inherit; color: inherit; cursor: pointer; }
-  .wrap { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+  /* Wider than the list page: the chart has one column per year. */
+  .wrap { max-width: 1800px; margin: 0 auto; padding: 0 24px; }
 
-  header { position: relative; padding: 44px 0 26px; }
+  /* Live event stream behind the page (same as the list page): ambient edges in the hero, plus edges
+     fired by the cursor in the side margins. Cards have an opaque surface, so events only show
+     through the page background. */
+  #events { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  .hero, .wrap { position: relative; z-index: 1; }
+  .hero { overflow: hidden; }
+  header { position: relative; padding: 36px 0 22px; }
   .polarity { flex: none; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 0.85em; height: 0.85em; }
   .polarity i { display: block; border-radius: 12%; background: var(--pos); }
   .polarity i:nth-child(2), .polarity i:nth-child(3) { background: var(--neg); }
@@ -75,23 +83,23 @@
     :root:not([data-theme]) .theme .moon { display: none; }
   }
   .hero-rule { height: 2px; background: linear-gradient(to right, var(--pos) 0 50%, var(--neg) 50% 100%); opacity: 0.85; }
-  .lead { margin: 0; color: var(--muted); max-width: 62ch; }
-  .lead a { white-space: nowrap; }
-  .nav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 12px 0 0; padding: 0; list-style: none; font-size: 0.92rem; }
+  .lead { margin: 0; color: var(--muted); max-width: 70ch; }
+  .nav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 0; padding: 0; list-style: none; font-size: 0.92rem; }
 
   button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-  /* Filters: one row, same chips as the list page. */
+  /* Filters: Type (which papers) and Task (which lanes), same chips as the list page. */
   .filters {
-    margin-top: 22px;
+    margin-top: 18px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 12px 16px;
+    padding: 10px 16px 12px;
   }
-  .facet { display: grid; grid-template-columns: 64px 1fr; gap: 4px 10px; align-items: baseline; }
+  .facet { display: grid; grid-template-columns: 64px 1fr; gap: 4px 10px; align-items: baseline; margin-top: 8px; }
+  .facet:first-child { margin-top: 0; }
   .facet-name { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
   .chip {
     padding: 3px 10px;
     font-size: 0.88rem;
@@ -104,12 +112,17 @@
   .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
   .chip[aria-pressed="true"] .n { color: inherit; opacity: 0.8; }
   .chip.empty:not([aria-pressed="true"]) { opacity: 0.4; }
-  .status { margin: 18px 2px 0; color: var(--muted); font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+  /* All / None: plain text buttons before a thin divider. */
+  .sep { width: 1px; height: 18px; margin: 0 4px; background: var(--border); }
+  .all { padding: 3px 6px; font-size: 0.85rem; color: var(--accent); background: none; border: 0; border-radius: 6px; }
+  .all:hover { background: var(--accent-soft); }
+  .all:disabled { color: var(--muted); cursor: default; background: none; opacity: 0.6; }
+  .status { margin: 16px 2px 0; color: var(--muted); font-size: 0.92rem; font-variant-numeric: tabular-nums; }
 
   /* The chart: a CSS grid. First column = lane labels (sticky), then one column per year.
-     Row 1 = year axis, row 2 = papers per year (bars), then one lane per task (one dot per paper). */
+     Years without any paper are collapsed into one narrow gap column so time still reads left to right. */
   .chart {
-    margin-top: 12px;
+    margin-top: 10px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -118,8 +131,7 @@
   }
   .grid {
     display: grid;
-    grid-template-columns: minmax(148px, max-content) repeat(var(--cols), minmax(38px, 1fr));
-    /* Fill the card when it fits, otherwise grow to the columns' minimum and scroll inside .chart. */
+    /* grid-template-columns is set from JS (depends on which years are gaps). */
     width: 100%;
     width: fit-content;
     min-width: 100%;
@@ -128,47 +140,62 @@
   .grid > .last { border-bottom: 0; }
   .label {
     position: sticky; left: 0; z-index: 1;
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 12px 8px 16px;
+    display: flex; flex-direction: column; justify-content: center; gap: 2px;
+    padding: 10px 14px 10px 16px;
     background: var(--surface);
     border-right: 1px solid var(--border);
-    font-size: 0.9rem; font-weight: 600;
+    font-size: 0.92rem; font-weight: 650;
     white-space: nowrap;
   }
   .label a { color: inherit; text-decoration: none; }
   .label a:hover { color: var(--accent); text-decoration: underline; }
-  .label .n { font-weight: 400; color: var(--muted); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+  .label .n { font-weight: 400; color: var(--muted); font-size: 0.8rem; font-variant-numeric: tabular-nums; }
   .label.empty { color: var(--muted); font-weight: 500; }
-  .axis { padding: 10px 0 6px; text-align: center; font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .axis.corner { position: sticky; left: 0; z-index: 1; background: var(--surface); border-right: 1px solid var(--border); text-align: left; padding-left: 16px; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
-  .axis.on { color: var(--text); font-weight: 600; }
-  .axis.none { opacity: 0.55; }
-  /* Total bars: a column chart whose bars share the year columns of the lanes below. */
-  .bar-cell { display: flex; align-items: flex-end; justify-content: center; height: var(--bar-h); padding: 0 6px; }
-  .bar { position: relative; width: min(60%, 22px); background: var(--accent); border-radius: 3px 3px 0 0; }
-  .bar .v { position: absolute; top: -1.3em; left: 50%; transform: translateX(-50%); font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-  /* Lanes: one dot per paper, wrapped inside the year cell. */
-  .cell { display: flex; flex-wrap: wrap; align-content: flex-start; justify-content: center; gap: 3px; padding: 7px 4px; min-height: 32px; }
-  .cell.none { background: repeating-linear-gradient(135deg, transparent 0 6px, var(--grid) 6px 7px); background-clip: padding-box; opacity: 0.6; }
-  .dot {
-    width: 14px; height: 14px; padding: 0;
-    background: var(--accent);
-    border: 2px solid var(--surface);
-    border-radius: 50%;
-    box-shadow: 0 0 0 1px transparent;
+  .axis {
+    padding: 9px 6px 7px; text-align: center;
+    background: var(--surface);
+    font-size: 0.86rem; font-weight: 650; font-variant-numeric: tabular-nums;
+    border-bottom: 1px solid var(--border);
   }
-  .dot:hover, .dot:focus-visible, .dot.active { transform: scale(1.25); }
-  .dot.linked { box-shadow: 0 0 0 2px var(--accent); }
-  .dot.active { background: var(--neg); box-shadow: 0 0 0 2px var(--neg); }
-  .dot.dim { opacity: 0.35; }
-  .dot { transition: transform 0.12s, opacity 0.12s; }
-  @media (prefers-reduced-motion: reduce) { .dot { transition: none; } }
-  .hint { margin: 10px 2px 0; color: var(--muted); font-size: 0.85rem; }
+  .axis .n { display: block; font-size: 0.74rem; font-weight: 400; color: var(--muted); }
+  .axis.corner { position: sticky; left: 0; z-index: 1; border-right: 1px solid var(--border); text-align: left; padding-left: 16px; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .axis.gap { padding: 6px 0; font-weight: 400; color: var(--muted); font-size: 0.72rem; }
+  .axis.gap span { display: inline-block; writing-mode: vertical-rl; transform: rotate(180deg); }
 
-  /* Tooltip: fixed near the hovered dot. */
+  /* Lanes: one card per paper, stacked inside the year cell. */
+  .cell { display: flex; flex-direction: column; gap: 4px; padding: 6px 5px; min-height: 40px; }
+  .cell.none, .cell.gap { background: repeating-linear-gradient(135deg, transparent 0 6px, var(--grid) 6px 7px); background-clip: padding-box; opacity: 0.6; }
+  .card {
+    display: block; width: 100%;
+    padding: 3px 7px 4px;
+    text-align: left;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-left-width: 3px;
+    border-radius: 6px;
+    line-height: 1.25;
+  }
+  .card:hover, .card:focus-visible { border-color: var(--accent); }
+  .card.linked { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .card.active { border-color: var(--neg); box-shadow: 0 0 0 1px var(--neg); }
+  .card.conference { border-left-color: var(--conference); }
+  .card.journal { border-left-color: var(--journal); }
+  .card.workshop { border-left-color: var(--workshop); }
+  .card.preprint { border-left-color: var(--preprint); }
+  .card .venue { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card.conference .venue { color: var(--conference); }
+  .card.journal .venue { color: var(--journal); }
+  .card.workshop .venue { color: var(--workshop); }
+  .card.preprint .venue { color: var(--preprint); }
+  /* One line each, so a busy year stays short enough to read the whole lane at a glance. */
+  .card .title { display: block; margin-top: 1px; font-size: 0.76rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 10px 2px 0; color: var(--muted); font-size: 0.85rem; }
+  .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; border-radius: 2px; vertical-align: -1px; }
+
+  /* Tooltip: full details of the hovered / tapped card. */
   .tip {
     position: fixed; z-index: 10;
-    max-width: min(360px, calc(100vw - 24px));
+    max-width: min(380px, calc(100vw - 24px));
     padding: 10px 12px;
     background: var(--surface);
     color: var(--text);
@@ -193,34 +220,21 @@
   .tip .links a::after { content: "↗"; font-size: 0.75em; opacity: 0.75; margin-left: 2px; }
   .tip .links a:hover { text-decoration: underline; }
 
-  /* Table view: the same numbers as text. */
-  details { margin-top: 18px; }
-  summary { cursor: pointer; color: var(--muted); font-size: 0.92rem; }
-  .tbl { overflow-x: auto; margin-top: 8px; }
-  table { border-collapse: collapse; font-size: 0.86rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  th, td { padding: 4px 8px; border-bottom: 1px solid var(--border); text-align: right; }
-  th:first-child, td:first-child { text-align: left; }
-  thead th { color: var(--muted); font-weight: 600; }
-  td.zero { color: var(--muted); opacity: 0.5; }
-  tfoot td { font-weight: 600; }
-
-  footer { margin: 40px 0 32px; color: var(--muted); font-size: 0.88rem; }
+  footer { margin: 40px 0 32px; color: var(--muted); font-size: 0.88rem; max-width: 920px; }
   footer p { margin: 0 0 10px; }
   .disclaimer { padding: 10px 14px; color: var(--text); background: var(--neg-soft); border-left: 3px solid var(--neg); border-radius: 6px; }
   .disclaimer strong { color: var(--neg-text); }
 
   @media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
     header { padding-top: 28px; }
     .facet { grid-template-columns: 1fr; }
-    /* The label column must never be narrower than its longest name: the grid cannot shrink below
-       its columns' minimum, so a fixed minimum would let long names spill into the year cells. */
-    .grid { grid-template-columns: max-content repeat(var(--cols), minmax(40px, 1fr)); }
-    .label { padding-left: 12px; font-size: 0.82rem; }
-    .axis { font-size: 0.74rem; }
+    .label { padding-left: 12px; font-size: 0.84rem; }
   }
 </style>
 </head>
 <body>
+<canvas id="events" aria-hidden="true"></canvas>
 <div class="hero">
   <div class="wrap">
     <header>
@@ -229,9 +243,9 @@
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
       <h1><span class="polarity" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Timeline <span class="sub">· Awesome Event-based Hands</span></span></h1>
-      <p class="lead">How the field evolved, one dot per paper and one lane per task. Hover or tap a dot for the paper; a paper that covers several tasks appears in each of its lanes.</p>
+      <p class="lead">How the field evolved: one card per paper, one lane per task, one column per year. A paper that covers several tasks appears in each of its lanes; hover or tap a card for authors and links.</p>
       <ul class="nav">
-        <li><a href="./">← Paper list</a></li>
+        <li><a href="index.html">← Paper list</a></li>
         <li><a href="__REPO_URL__">View on GitHub</a></li>
       </ul>
     </header>
@@ -245,14 +259,9 @@
   </section>
 
   <p id="status" class="status" role="status" aria-live="polite"></p>
-  <div class="chart"><div id="grid" class="grid" role="img" aria-label="Papers per task and year"></div></div>
-  <p class="hint">Click a task name to open the filtered paper list. Hatched cells are years with no paper on that task.</p>
+  <div class="chart"><div id="grid" class="grid" aria-label="Papers per task and year"></div></div>
+  <p class="legend" id="legend"></p>
   <noscript><p class="status">This page needs JavaScript. The full list is also available in the <a href="__REPO_URL__#papers">README</a>.</p></noscript>
-
-  <details id="table">
-    <summary>Table view (papers per task and year)</summary>
-    <div class="tbl"></div>
-  </details>
 
   <footer>
     <p class="disclaimer"><strong>Disclaimer.</strong> Entries are maintained by hand and may contain errors. Before citing, always verify the details against the official source (DOI page, proceedings, or arXiv).</p>
@@ -270,13 +279,10 @@ const TYPE_LABELS = { conference: "Conference", journal: "Journal", workshop: "W
 const TYPES = Object.keys(TYPE_LABELS);
 
 PAPERS.forEach((p, i) => { p.id = i; });
-const YEARS = [];
-{
-  const ys = PAPERS.map((p) => p.year);
-  for (let y = Math.min(...ys); y <= Math.max(...ys); y++) YEARS.push(y);
-}
+const FIRST = Math.min(...PAPERS.map((p) => p.year)), LAST = Math.max(...PAPERS.map((p) => p.year));
 
-const state = { type: new Set() };
+// type: which papers are shown (empty = all). task: which lanes are shown.
+const state = { type: new Set(), task: new Set(TASKS) };
 const $ = (id) => document.getElementById(id);
 function el(tag, props = {}, children = []) {
   const node = Object.assign(document.createElement(tag), props);
@@ -288,112 +294,127 @@ const listUrl = (task) => {
   const params = new URLSearchParams();
   params.set("task", task);
   if (state.type.size) params.set("type", [...state.type].join("|"));
-  return "./#" + params.toString();
+  return "index.html#" + params.toString();
 };
 
+function facet(name, chips, before = []) {
+  return el("div", { className: "facet" }, [
+    el("div", { className: "facet-name", textContent: name }),
+    el("div", { className: "chips" }, [...before, ...chips]),
+  ]);
+}
+function chip(text, count, pressed, onClick) {
+  const c = el("button", { type: "button", className: "chip" + (count ? "" : " empty") }, [text, el("span", { className: "n", textContent: count })]);
+  c.setAttribute("aria-pressed", pressed);
+  c.addEventListener("click", onClick);
+  return c;
+}
 function renderFacets() {
-  const count = {};
-  PAPERS.forEach((p) => (count[p.type] = (count[p.type] || 0) + 1));
-  const chips = TYPES.filter((t) => count[t]).map((t) => {
-    const pressed = state.type.has(t);
-    const chip = el("button", { type: "button", className: "chip" }, [TYPE_LABELS[t], el("span", { className: "n", textContent: count[t] })]);
-    chip.setAttribute("aria-pressed", pressed);
-    chip.addEventListener("click", () => { pressed ? state.type.delete(t) : state.type.add(t); update(); });
-    return chip;
-  });
-  $("facets").replaceChildren(el("div", { className: "facet" }, [
-    el("div", { className: "facet-name", textContent: "Type" }),
-    el("div", { className: "chips" }, chips),
-  ]));
+  const byType = {};
+  PAPERS.forEach((p) => (byType[p.type] = (byType[p.type] || 0) + 1));
+  const typeChips = TYPES.filter((t) => byType[t]).map((t) =>
+    chip(TYPE_LABELS[t], byType[t], state.type.has(t), () => { state.type.has(t) ? state.type.delete(t) : state.type.add(t); update(); }));
+
+  const papers = shown();
+  const taskChips = TASKS.map((t) =>
+    chip(t, papers.filter((p) => p.task.includes(t)).length, state.task.has(t), () => { state.task.has(t) ? state.task.delete(t) : state.task.add(t); update(); }));
+  const all = el("button", { type: "button", className: "all", textContent: "All", disabled: state.task.size === TASKS.length });
+  all.addEventListener("click", () => { state.task = new Set(TASKS); update(); });
+  const none = el("button", { type: "button", className: "all", textContent: "None", disabled: !state.task.size });
+  none.addEventListener("click", () => { state.task.clear(); update(); });
+
+  $("facets").replaceChildren(facet("Type", typeChips), facet("Task", taskChips, [all, none, el("span", { className: "sep" })]));
+}
+
+// Columns: every year from the first to the last paper; runs of empty years collapse into one gap column.
+function columns(papers) {
+  const has = new Set(papers.map((p) => p.year));
+  const cols = [];
+  for (let y = FIRST; y <= LAST; y++) {
+    if (has.has(y)) cols.push({ from: y, to: y, gap: false });
+    else if (cols.length && cols[cols.length - 1].gap) cols[cols.length - 1].to = y;
+    else cols.push({ from: y, to: y, gap: true });
+  }
+  return cols;
 }
 
 function renderGrid() {
   const papers = shown();
+  const lanes = TASKS.filter((t) => state.task.has(t));
+  const cols = columns(papers);
   const grid = $("grid");
-  grid.style.setProperty("--cols", YEARS.length);
+  grid.style.gridTemplateColumns = ["max-content", ...cols.map((c) => (c.gap ? "30px" : "minmax(176px, 1fr)"))].join(" ");
   grid.replaceChildren();
 
-  const perYear = Object.fromEntries(YEARS.map((y) => [y, papers.filter((p) => p.year === y).length]));
-  const peak = Math.max(1, ...Object.values(perYear));
-  const lastYear = YEARS[YEARS.length - 1];
-
-  // Row 1: year axis.
+  // Year axis with the number of papers in that year.
   grid.append(el("div", { className: "axis corner", textContent: "Task \\ Year" }));
-  for (const y of YEARS) grid.append(el("div", { className: "axis" + (perYear[y] ? " on" : " none"), textContent: String(y) }));
-
-  // Row 2: papers per year.
-  const BAR_H = 56;
-  grid.append(el("div", { className: "label" }, ["All papers", el("span", { className: "n", textContent: papers.length })]));
-  for (const y of YEARS) {
-    const cell = el("div", { className: "bar-cell", title: `${y}: ${perYear[y]} paper${perYear[y] === 1 ? "" : "s"}` });
-    cell.style.setProperty("--bar-h", BAR_H + 10 + "px");
-    if (perYear[y]) {
-      const bar = el("div", { className: "bar" });
-      bar.style.height = Math.max(4, Math.round((perYear[y] / peak) * BAR_H)) + "px";
-      // Direct labels only where they help: the peak year and the latest year.
-      if (perYear[y] === peak || y === lastYear) bar.append(el("span", { className: "v", textContent: perYear[y] }));
-      cell.append(bar);
+  for (const c of cols) {
+    if (c.gap) {
+      const text = c.from === c.to ? String(c.from) : `${c.from}–${c.to}`;
+      grid.append(el("div", { className: "axis gap", title: `${text}: no papers` }, [el("span", { textContent: text })]));
+    } else {
+      const n = papers.filter((p) => p.year === c.from).length;
+      grid.append(el("div", { className: "axis" }, [String(c.from), el("span", { className: "n", textContent: n === 1 ? "1 paper" : `${n} papers` })]));
     }
-    grid.append(cell);
   }
 
-  // One lane per task.
-  TASKS.forEach((task, ti) => {
-    const last = ti === TASKS.length - 1 ? " last" : "";
+  lanes.forEach((task, ti) => {
+    const last = ti === lanes.length - 1 ? " last" : "";
     const inLane = papers.filter((p) => p.task.includes(task));
-    const label = el("div", { className: "label" + (inLane.length ? "" : " empty") + last }, [
+    grid.append(el("div", { className: "label" + (inLane.length ? "" : " empty") + last }, [
       el("a", { href: listUrl(task), textContent: task, title: `Open the paper list filtered by task: ${task}` }),
-      el("span", { className: "n", textContent: inLane.length }),
-    ]);
-    grid.append(label);
-    for (const y of YEARS) {
-      const here = inLane.filter((p) => p.year === y);
+      el("span", { className: "n", textContent: inLane.length === 1 ? "1 paper" : `${inLane.length} papers` }),
+    ]));
+    for (const c of cols) {
+      if (c.gap) { grid.append(el("div", { className: "cell gap" + last })); continue; }
+      const here = inLane.filter((p) => p.year === c.from);
       const cell = el("div", { className: "cell" + (here.length ? "" : " none") + last });
-      for (const p of here) {
-        const dot = el("button", { type: "button", className: "dot", title: p.title });
-        dot.dataset.id = p.id;
-        dot.setAttribute("aria-label", `${p.title} (${p.venue} ${p.year})`);
-        dot.addEventListener("pointerenter", () => showTip(p, dot, false));
-        dot.addEventListener("focus", () => showTip(p, dot, false));
-        dot.addEventListener("pointerleave", () => { if (!pinned) hideTip(); });
-        dot.addEventListener("blur", () => { if (!pinned) hideTip(); });
-        dot.addEventListener("click", (e) => { e.stopPropagation(); pinned && current === p ? unpin() : showTip(p, dot, true); });
-        cell.append(dot);
-      }
+      for (const p of here) cell.append(card(p));
       grid.append(cell);
     }
   });
+  if (!lanes.length) {
+    grid.append(el("div", { className: "label empty last", textContent: "No task selected" }));
+    for (const c of cols) grid.append(el("div", { className: "cell gap last" }));
+  }
 
-  $("status").textContent = papers.length === PAPERS.length
-    ? `${PAPERS.length} papers, ${YEARS[0]}–${lastYear}`
-    : `${papers.length} of ${PAPERS.length} papers, ${YEARS[0]}–${lastYear}`;
+  $("status").textContent = (papers.length === PAPERS.length ? `${PAPERS.length} papers` : `${papers.length} of ${PAPERS.length} papers`)
+    + `, ${FIRST}–${LAST}` + (lanes.length === TASKS.length ? "" : `, ${lanes.length} of ${TASKS.length} tasks`);
 }
 
-function renderTable() {
-  const papers = shown();
-  const head = el("tr", {}, [el("th", { textContent: "Task" }), ...YEARS.map((y) => el("th", { textContent: String(y) })), el("th", { textContent: "Total" })]);
-  const rows = TASKS.map((task) => {
-    const inLane = papers.filter((p) => p.task.includes(task));
-    const cells = YEARS.map((y) => {
-      const n = inLane.filter((p) => p.year === y).length;
-      return el("td", { className: n ? "" : "zero", textContent: n });
-    });
-    return el("tr", {}, [el("td", { textContent: task }), ...cells, el("td", { textContent: inLane.length })]);
-  });
-  const foot = el("tr", {}, [el("td", { textContent: "All papers" }), ...YEARS.map((y) => el("td", { textContent: papers.filter((p) => p.year === y).length })), el("td", { textContent: papers.length })]);
-  $("table").querySelector(".tbl").replaceChildren(el("table", {}, [el("thead", {}, [head]), el("tbody", {}, rows), el("tfoot", {}, [foot])]));
+function card(p) {
+  const c = el("button", { type: "button", className: "card " + p.type }, [
+    el("span", { className: "venue", textContent: `${p.venue} ${p.year}` }),
+    el("span", { className: "title", textContent: p.title }),
+  ]);
+  c.dataset.id = p.id;
+  c.setAttribute("aria-label", `${p.title} (${p.venue} ${p.year})`);
+  c.addEventListener("pointerenter", () => { if (!pinned) showTip(p, c, false); });
+  c.addEventListener("focus", () => { if (!pinned) showTip(p, c, false); });
+  c.addEventListener("pointerleave", () => { if (!pinned) hideTip(); });
+  c.addEventListener("blur", () => { if (!pinned) hideTip(); });
+  c.addEventListener("click", (e) => { e.stopPropagation(); pinned && current === p ? unpin() : showTip(p, c, true); });
+  return c;
+}
+
+function renderLegend() {
+  $("legend").replaceChildren(...TYPES.map((t) => {
+    const i = el("i");
+    i.style.background = `var(--${t})`;
+    return el("span", {}, [i, TYPE_LABELS[t]]);
+  }));
 }
 
 // Tooltip + cross-highlight of the same paper in its other lanes.
 const tip = $("tip");
 let current = null, pinned = false;
-function showTip(p, dot, pin) {
+function showTip(p, card, pin) {
   current = p;
   pinned = pin;
-  document.querySelectorAll(".dot").forEach((d) => {
+  document.querySelectorAll(".card").forEach((d) => {
     const same = Number(d.dataset.id) === p.id;
-    d.classList.toggle("linked", same && d !== dot);
-    d.classList.toggle("active", d === dot);
+    d.classList.toggle("linked", same && d !== card);
+    d.classList.toggle("active", d === card);
   });
   const links = Object.keys(LINK_LABELS).filter((k) => p.links[k]).map((k) =>
     el("a", { href: p.links[k], textContent: LINK_LABELS[k], target: "_blank", rel: "noopener" }));
@@ -408,18 +429,18 @@ function showTip(p, dot, pin) {
   );
   if (links.length) tip.append(el("div", { className: "links" }, links));
   tip.hidden = false;
-  const r = dot.getBoundingClientRect();
+  const r = card.getBoundingClientRect();
   const w = tip.offsetWidth, h = tip.offsetHeight;
-  let x = r.left + r.width / 2 - w / 2, y = r.bottom + 10;
+  let x = r.left, y = r.bottom + 8;
   x = Math.max(12, Math.min(x, innerWidth - w - 12));
-  if (y + h > innerHeight - 12) y = r.top - h - 10;
+  if (y + h > innerHeight - 12) y = r.top - h - 8;
   tip.style.left = x + "px";
   tip.style.top = Math.max(12, y) + "px";
 }
 function hideTip() {
   tip.hidden = true;
   current = null;
-  document.querySelectorAll(".dot.linked, .dot.active").forEach((d) => d.classList.remove("linked", "active"));
+  document.querySelectorAll(".card.linked, .card.active").forEach((d) => d.classList.remove("linked", "active"));
 }
 function unpin() { pinned = false; hideTip(); }
 document.addEventListener("click", (e) => { if (pinned && !tip.contains(e.target)) unpin(); });
@@ -427,26 +448,30 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape") unpin(); }
 addEventListener("scroll", () => { if (!pinned) hideTip(); }, { passive: true });
 document.querySelector(".chart").addEventListener("scroll", () => hideTip(), { passive: true });
 
-// The type filter is mirrored in the URL hash so a view can be shared.
+// Filters are mirrored in the URL hash so a view can be shared ("task" is omitted when all lanes are shown).
 function writeHash() {
   const params = new URLSearchParams();
   if (state.type.size) params.set("type", [...state.type].join("|"));
+  if (state.task.size !== TASKS.length) params.set("task", [...state.task].join("|"));
   const hash = params.toString();
   history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
 }
 function readHash() {
   const params = new URLSearchParams(location.hash.slice(1));
   state.type = new Set((params.get("type") || "").split("|").filter((t) => TYPES.includes(t)));
+  state.task = params.has("task")
+    ? new Set(params.get("task").split("|").filter((t) => TASKS.includes(t)))
+    : new Set(TASKS);
 }
 function update(fromHash) {
   if (!fromHash) writeHash();
   unpin();
   renderFacets();
   renderGrid();
-  renderTable();
 }
 window.addEventListener("hashchange", () => { readHash(); update(true); });
 readHash();
+renderLegend();
 update(true);
 
 // Theme toggle: flips relative to whatever is currently shown; the choice is remembered per browser.
@@ -457,7 +482,123 @@ $("theme").addEventListener("click", () => {
   const next = isDark() ? "light" : "dark";
   document.documentElement.dataset.theme = next;
   try { localStorage.setItem("theme", next); } catch {}
+  dispatchEvent(new Event("themechange"));
 });
+
+// Event stream on a full-viewport canvas. Ambient edges fire inside the hero (denser at the top),
+// and pointer motion fires ON pixels ahead of the cursor with OFF pixels trailing it, like a moving
+// edge seen by an event camera. Sparse and slow so it stays calm; a static frame under
+// prefers-reduced-motion.
+(() => {
+  const canvas = $("events");
+  const ctx = canvas.getContext("2d");
+  const hero = document.querySelector(".hero");
+  const column = document.querySelector(".chart").closest(".wrap");  // content column: cursor events stay outside it
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const PX = 3;                  // sensor pixel size (css px); events snap to this grid
+  const LIFE = 2600, CURSOR_LIFE = 1300;
+  const RATE = 1 / 8e6;          // ambient edges per ms per css-pixel of hero area (~25/s at 900x220)
+  let w = 0, h = 0, events = [], colors = {}, last = 0, frozen = 0, ptr = null;
+
+  const snap = (v) => Math.round(v / PX) * PX;
+  const readColors = () => {
+    colors = isDark() ? { 1: "#3ddc78", 0: "#ff5c5c" } : { 1: "#22a55a", 0: "#d9453d" };
+  };
+  const resize = () => {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    w = innerWidth; h = innerHeight;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (reduce) draw(frozen);
+  };
+
+  // A short vertical edge: a run of ON pixels, most with an OFF pixel beside them slightly later.
+  const fireEdge = (x, y, now, life = LIFE) => {
+    const n = 3 + Math.floor(Math.random() * 6), dir = Math.random() < 0.5 ? -1 : 1;
+    for (let i = 0; i < n; i++) {
+      const t0 = now + i * 40, py = y + i * PX;
+      events.push({ x, y: py, pol: 1, t0, life });
+      if (Math.random() < 0.7) events.push({ x: x - dir * PX, y: py, pol: 0, t0: t0 + 90, life });
+    }
+  };
+  const fireAmbient = (now) => {
+    const r = hero.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > h) return;
+    // Linear falloff toward the bottom of the hero.
+    const y = r.top + r.height * (1 - Math.sqrt(Math.random()));
+    fireEdge(snap(Math.random() * w), snap(y), now);
+  };
+  // Pointer moved from (ax, ay) to (bx, by): fire along the path, ON ahead of the motion, OFF behind.
+  // Only in the side margins, so the reading area stays quiet.
+  const fireMotion = (ax, ay, bx, by, now) => {
+    const dx = bx - ax, dy = by - ay, d = Math.hypot(dx, dy);
+    if (d < 2) return;
+    const c = column.getBoundingClientRect();
+    const margin = (x) => x < c.left - 8 || x > c.right + 8;
+    if (!margin(ax) && !margin(bx)) return;
+    const n0 = events.length;
+    const nx = dx / d, ny = dy / d;
+    const steps = Math.min(Math.ceil(d / 4), 8);
+    for (let i = 1; i <= steps; i++) {
+      const x = ax + dx * i / steps, y = ay + dy * i / steps;
+      for (let k = 0; k < 2; k++) {
+        const s = (Math.random() - 0.5) * 14;             // spread along the edge (perpendicular to motion)
+        const ex = x - ny * s, ey = y + nx * s;
+        events.push({ x: snap(ex + nx * PX * 2), y: snap(ey + ny * PX * 2), pol: 1, t0: now, life: CURSOR_LIFE });
+        if (Math.random() < 0.8)
+          events.push({ x: snap(ex - nx * PX * (3 + Math.random() * 3)), y: snap(ey - ny * PX * (3 + Math.random() * 3)), pol: 0, t0: now + 60, life: CURSOR_LIFE });
+      }
+    }
+    // Drop the pixels that landed inside the column.
+    events = events.filter((e, i) => i < n0 || margin(e.x));
+  };
+
+  const draw = (now) => {
+    ctx.clearRect(0, 0, w, h);
+    events = events.filter((e) => now - e.t0 < e.life);
+    for (const e of events) {
+      const age = (now - e.t0) / e.life;
+      if (age < 0) continue;
+      ctx.globalAlpha = 0.7 * (1 - age) ** 1.5;
+      ctx.fillStyle = colors[e.pol];
+      ctx.fillRect(e.x, e.y, PX, PX);
+    }
+    ctx.globalAlpha = 1;
+  };
+  const frame = (now) => {
+    const dt = Math.min(now - last, 100);
+    last = now;
+    const r = hero.getBoundingClientRect();
+    let due = r.width * r.height * RATE * dt;
+    for (; due > 0; due--) if (Math.random() < due) fireAmbient(now);
+    draw(now);
+    if (!document.hidden) requestAnimationFrame(frame);
+  };
+
+  readColors();
+  systemDark.addEventListener("change", readColors);
+  addEventListener("themechange", readColors);
+  addEventListener("resize", resize);
+  if (reduce) {
+    frozen = performance.now();
+    resize();
+    const r = hero.getBoundingClientRect();
+    for (let i = 0; i < r.width * r.height * RATE * LIFE; i++) fireAmbient(frozen - Math.random() * LIFE);
+    draw(frozen);
+    return;
+  }
+  resize();
+  addEventListener("pointermove", (e) => {
+    const now = performance.now();
+    if (ptr && now - ptr.t < 250) fireMotion(ptr.x, ptr.y, e.clientX, e.clientY, now);
+    ptr = { x: e.clientX, y: e.clientY, t: now };
+  }, { passive: true });
+  addEventListener("pointerleave", () => { ptr = null; });
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) { last = performance.now(); requestAnimationFrame(frame); } });
+  last = performance.now();
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>

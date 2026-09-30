@@ -26,7 +26,7 @@
   venue: IEEE Access
   year: 2026
   type: journal
-  task: [mesh, pose, detection, dataset]
+  task: [mesh, pose, detection, segmentation, dataset]
   doi: 10.1109/ACCESS.2026.3735008
   project: https://ryhara.github.io/EventEgoHandsV2/
   arxiv: 2609.17189
@@ -126,7 +126,7 @@
   venue: ICIP
   year: 2025
   type: conference
-  task: [mesh, pose]
+  task: [mesh, pose, segmentation, dataset]
   doi: 10.1109/ICIP55913.2025.11084751
   project: https://ryhara.github.io/EventEgoHands/
   arxiv: 2505.19169

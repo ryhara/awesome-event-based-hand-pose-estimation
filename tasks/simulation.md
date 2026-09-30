@@ -9,7 +9,7 @@ Event simulators and synthetic data pipelines for hands.
 
 2 papers · [2021](#2021)
 
-Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [detection](detection.md) (5) · [gesture recognition](gesture-recognition.md) (17) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (30)
+Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [detection](detection.md) (5) · [segmentation](segmentation.md) (2) · [gesture recognition](gesture-recognition.md) (17) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (31)
 
 ## Papers
 

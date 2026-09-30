@@ -5,12 +5,11 @@
 
 A curated list of papers on **hands and event cameras**: 3D hand pose / mesh estimation, hand tracking, hand detection and segmentation, hand gesture and sign language recognition, egocentric hand-object action recognition, and the datasets and simulators behind them.
 
-**Searchable version (filter by year, venue, type, task, tag): https://ryhara.github.io/awesome-event-based-hands/**  
-**Timeline by task (one dot per paper): https://ryhara.github.io/awesome-event-based-hands/timeline.html**
+**Searchable version (filter by year, venue, type, task, tag): https://ryhara.github.io/awesome-event-based-hands/**
 
 52 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2021](#2021) · [2020](#2020) · [2019](#2019) · [2017](#2017) · [2014](#2014) · [2011](#2011)
 
-By task (each link is a Markdown page with only that task's papers): [pose](tasks/pose.md) (14) · [mesh](tasks/mesh.md) (10) · [tracking](tasks/tracking.md) (8) · [detection](tasks/detection.md) (5) · [gesture recognition](tasks/gesture-recognition.md) (17) · [sign language](tasks/sign-language.md) (11) · [hand-object](tasks/hand-object.md) (4) · [action recognition](tasks/action-recognition.md) (2) · [dataset](tasks/dataset.md) (30) · [simulation](tasks/simulation.md) (2)
+By task (each link is a Markdown page with only that task's papers): [pose](tasks/pose.md) (14) · [mesh](tasks/mesh.md) (10) · [tracking](tasks/tracking.md) (8) · [detection](tasks/detection.md) (5) · [segmentation](tasks/segmentation.md) (2) · [gesture recognition](tasks/gesture-recognition.md) (17) · [sign language](tasks/sign-language.md) (11) · [hand-object](tasks/hand-object.md) (4) · [action recognition](tasks/action-recognition.md) (2) · [dataset](tasks/dataset.md) (31) · [simulation](tasks/simulation.md) (2)
 
 ## Papers
 
@@ -18,7 +17,7 @@ By task (each link is a Markdown page with only that task's papers): [pose](task
 
 - `IEEE Access 2026` **EventEgoHands++: Event-based Egocentric 3D Hand Mesh Reconstruction with Real Dataset**  
   Ryosei Hara, Wataru Ikeda, Masashi Hatano, Mariko Isogawa  
-  [[DOI]](https://doi.org/10.1109/ACCESS.2026.3735008) [[Project]](https://ryhara.github.io/EventEgoHandsV2/) [[arXiv]](https://arxiv.org/abs/2609.17189) [[Code]](https://github.com/ryhara/EventEgoHandsV2) · Task: [pose](tasks/pose.md), [mesh](tasks/mesh.md), [detection](tasks/detection.md), [dataset](tasks/dataset.md)
+  [[DOI]](https://doi.org/10.1109/ACCESS.2026.3735008) [[Project]](https://ryhara.github.io/EventEgoHandsV2/) [[arXiv]](https://arxiv.org/abs/2609.17189) [[Code]](https://github.com/ryhara/EventEgoHandsV2) · Task: [pose](tasks/pose.md), [mesh](tasks/mesh.md), [detection](tasks/detection.md), [segmentation](tasks/segmentation.md), [dataset](tasks/dataset.md)
 
 - `ICPR 2026` **Leveraging RGB Images for Pre-Training of Event-Based Hand Pose Estimation**  
   Ruicong Liu, Takehiko Ohkawa, Tze Ho Elden Tse, Mingfang Zhang, Angela Yao, Yoichi Sato  
@@ -60,7 +59,7 @@ By task (each link is a Markdown page with only that task's papers): [pose](task
 
 - `ICIP 2025` **EventEgoHands: Event-based Egocentric 3D Hand Mesh Reconstruction**  
   Ryosei Hara, Wataru Ikeda, Masashi Hatano, Mariko Isogawa  
-  [[DOI]](https://doi.org/10.1109/ICIP55913.2025.11084751) [[Project]](https://ryhara.github.io/EventEgoHands/) [[arXiv]](https://arxiv.org/abs/2505.19169) [[Code]](https://github.com/ryhara/EventEgoHandsV2) · Task: [pose](tasks/pose.md), [mesh](tasks/mesh.md)
+  [[DOI]](https://doi.org/10.1109/ICIP55913.2025.11084751) [[Project]](https://ryhara.github.io/EventEgoHands/) [[arXiv]](https://arxiv.org/abs/2505.19169) [[Code]](https://github.com/ryhara/EventEgoHandsV2) · Task: [pose](tasks/pose.md), [mesh](tasks/mesh.md), [segmentation](tasks/segmentation.md), [dataset](tasks/dataset.md)
 
 - `arXiv 2025` **EvHand-FPV: Efficient Event-Based 3D Hand Tracking from First-Person View**  
   Zhen Xu, Guorui Lu, Chang Gao, Qinyu Chen  

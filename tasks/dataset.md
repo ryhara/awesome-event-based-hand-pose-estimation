@@ -7,9 +7,9 @@ Papers whose main contribution includes a dataset.
 
 [← Back to the full list](../README.md) · [Filter on the web page](https://ryhara.github.io/awesome-event-based-hands/#task=dataset)
 
-30 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2021](#2021) · [2020](#2020) · [2019](#2019) · [2017](#2017)
+31 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2021](#2021) · [2020](#2020) · [2019](#2019) · [2017](#2017)
 
-Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [detection](detection.md) (5) · [gesture recognition](gesture-recognition.md) (17) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [simulation](simulation.md) (2)
+Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [detection](detection.md) (5) · [segmentation](segmentation.md) (2) · [gesture recognition](gesture-recognition.md) (17) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [simulation](simulation.md) (2)
 
 ## Papers
 
@@ -17,7 +17,7 @@ Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [tracking](tracking
 
 - `IEEE Access 2026` **EventEgoHands++: Event-based Egocentric 3D Hand Mesh Reconstruction with Real Dataset**  
   Ryosei Hara, Wataru Ikeda, Masashi Hatano, Mariko Isogawa  
-  [[DOI]](https://doi.org/10.1109/ACCESS.2026.3735008) [[Project]](https://ryhara.github.io/EventEgoHandsV2/) [[arXiv]](https://arxiv.org/abs/2609.17189) [[Code]](https://github.com/ryhara/EventEgoHandsV2) · Task: [pose](pose.md), [mesh](mesh.md), [detection](detection.md), [dataset](dataset.md)
+  [[DOI]](https://doi.org/10.1109/ACCESS.2026.3735008) [[Project]](https://ryhara.github.io/EventEgoHandsV2/) [[arXiv]](https://arxiv.org/abs/2609.17189) [[Code]](https://github.com/ryhara/EventEgoHandsV2) · Task: [pose](pose.md), [mesh](mesh.md), [detection](detection.md), [segmentation](segmentation.md), [dataset](dataset.md)
 
 - `IEEE Sensors Journal 2026` **Tracking Fast by Learning From Slow: An Event-Based Hand Tracker Leveraging Knowledge in RGB Domain**  
   Chuanlin Lan, Ziyuan Yin, Arindam Basu, Rosa H. M. Chan  
@@ -40,6 +40,10 @@ Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [tracking](tracking
   [[DOI]](https://doi.org/10.1109/TBIOM.2026.3665391) · Task: [pose](pose.md), [hand-object](hand-object.md), [dataset](dataset.md)
 
 ### 2025
+
+- `ICIP 2025` **EventEgoHands: Event-based Egocentric 3D Hand Mesh Reconstruction**  
+  Ryosei Hara, Wataru Ikeda, Masashi Hatano, Mariko Isogawa  
+  [[DOI]](https://doi.org/10.1109/ICIP55913.2025.11084751) [[Project]](https://ryhara.github.io/EventEgoHands/) [[arXiv]](https://arxiv.org/abs/2505.19169) [[Code]](https://github.com/ryhara/EventEgoHandsV2) · Task: [pose](pose.md), [mesh](mesh.md), [segmentation](segmentation.md), [dataset](dataset.md)
 
 - `arXiv 2025` **EvHand-FPV: Efficient Event-Based 3D Hand Tracking from First-Person View**  
   Zhen Xu, Guorui Lu, Chang Gao, Qinyu Chen  

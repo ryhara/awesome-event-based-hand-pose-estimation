@@ -9,7 +9,7 @@ Hand detection: bounding boxes and hand presence.
 
 5 papers · [2026](#2026) · [2025](#2025) · [2011](#2011)
 
-Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [gesture recognition](gesture-recognition.md) (17) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (30) · [simulation](simulation.md) (2)
+Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [segmentation](segmentation.md) (2) · [gesture recognition](gesture-recognition.md) (17) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (31) · [simulation](simulation.md) (2)
 
 ## Papers
 
@@ -17,7 +17,7 @@ Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [tracking](tracking
 
 - `IEEE Access 2026` **EventEgoHands++: Event-based Egocentric 3D Hand Mesh Reconstruction with Real Dataset**  
   Ryosei Hara, Wataru Ikeda, Masashi Hatano, Mariko Isogawa  
-  [[DOI]](https://doi.org/10.1109/ACCESS.2026.3735008) [[Project]](https://ryhara.github.io/EventEgoHandsV2/) [[arXiv]](https://arxiv.org/abs/2609.17189) [[Code]](https://github.com/ryhara/EventEgoHandsV2) · Task: [pose](pose.md), [mesh](mesh.md), [detection](detection.md), [dataset](dataset.md)
+  [[DOI]](https://doi.org/10.1109/ACCESS.2026.3735008) [[Project]](https://ryhara.github.io/EventEgoHandsV2/) [[arXiv]](https://arxiv.org/abs/2609.17189) [[Code]](https://github.com/ryhara/EventEgoHandsV2) · Task: [pose](pose.md), [mesh](mesh.md), [detection](detection.md), [segmentation](segmentation.md), [dataset](dataset.md)
 
 - `arXiv 2026` **A Multimodal RGB and Events Dataset for Hand Detection in First-Person View**  
   Bharghav Kota, Yulia Sandamirskaya  
