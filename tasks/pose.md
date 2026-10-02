@@ -7,7 +7,7 @@
 
 [← Back to the full list](../README.md) · [Filter on the web page](https://ryhara.github.io/awesome-event-based-hands/#task=pose)
 
-14 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2021](#2021)
+15 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2021](#2021)
 
 Other tasks: [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [detection](detection.md) (5) · [segmentation](segmentation.md) (2) · [gesture recognition](gesture-recognition.md) (17) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (31) · [simulation](simulation.md) (2)
 
@@ -34,6 +34,10 @@ Other tasks: [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [detection](
 - `CVIDL 2026` **A Lightweight Network for Event-Camera-Based Hand Pose Estimation**  
   Yu Guo, Xin He, Xiaoxiao Zhang, Sishun Song  
   [[DOI]](https://doi.org/10.1109/CVIDL70130.2026.11637781) · Task: [pose](pose.md)
+
+- `IEEE IoT-J 2026` **RepHand: A Reparameterized Lightweight Network for Event-based Hand Pose Estimation**  
+  Yu Guo, Xiaoxiao Zhang, Sishun Song, Yinong Cao, Xin He, Shouzheng Zhu, Changhui Jiang, Yuwei Chen, Shijie Liu, Jianyu Wang  
+  [[DOI]](https://doi.org/10.1109/JIOT.2026.3730463) · Task: [pose](pose.md)
 
 - `IEEE TBIOM 2026` **Event-Enhanced Hand Behavior Modeling: Toward Robust Dexterous Hand Motion Transfer**  
   Shaochen Wang, Kang Chen  

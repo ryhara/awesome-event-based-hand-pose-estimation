@@ -7,9 +7,9 @@ A curated list of papers on **hands and event cameras**: 3D hand pose / mesh est
 
 **Searchable version (filter by year, venue, type, task, tag): https://ryhara.github.io/awesome-event-based-hands/**
 
-52 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2021](#2021) · [2020](#2020) · [2019](#2019) · [2017](#2017) · [2014](#2014) · [2011](#2011)
+53 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2021](#2021) · [2020](#2020) · [2019](#2019) · [2017](#2017) · [2014](#2014) · [2011](#2011)
 
-By task (each link is a Markdown page with only that task's papers): [pose](tasks/pose.md) (14) · [mesh](tasks/mesh.md) (10) · [tracking](tasks/tracking.md) (8) · [detection](tasks/detection.md) (5) · [segmentation](tasks/segmentation.md) (2) · [gesture recognition](tasks/gesture-recognition.md) (17) · [sign language](tasks/sign-language.md) (11) · [hand-object](tasks/hand-object.md) (4) · [action recognition](tasks/action-recognition.md) (2) · [dataset](tasks/dataset.md) (31) · [simulation](tasks/simulation.md) (2)
+By task (each link is a Markdown page with only that task's papers): [pose](tasks/pose.md) (15) · [mesh](tasks/mesh.md) (10) · [tracking](tasks/tracking.md) (8) · [detection](tasks/detection.md) (5) · [segmentation](tasks/segmentation.md) (2) · [gesture recognition](tasks/gesture-recognition.md) (17) · [sign language](tasks/sign-language.md) (11) · [hand-object](tasks/hand-object.md) (4) · [action recognition](tasks/action-recognition.md) (2) · [dataset](tasks/dataset.md) (31) · [simulation](tasks/simulation.md) (2)
 
 ## Papers
 
@@ -46,6 +46,10 @@ By task (each link is a Markdown page with only that task's papers): [pose](task
 - `CVIDL 2026` **A Lightweight Network for Event-Camera-Based Hand Pose Estimation**  
   Yu Guo, Xin He, Xiaoxiao Zhang, Sishun Song  
   [[DOI]](https://doi.org/10.1109/CVIDL70130.2026.11637781) · Task: [pose](tasks/pose.md)
+
+- `IEEE IoT-J 2026` **RepHand: A Reparameterized Lightweight Network for Event-based Hand Pose Estimation**  
+  Yu Guo, Xiaoxiao Zhang, Sishun Song, Yinong Cao, Xin He, Shouzheng Zhu, Changhui Jiang, Yuwei Chen, Shijie Liu, Jianyu Wang  
+  [[DOI]](https://doi.org/10.1109/JIOT.2026.3730463) · Task: [pose](tasks/pose.md)
 
 - `IEEE TBIOM 2026` **Event-Enhanced Hand Behavior Modeling: Toward Robust Dexterous Hand Motion Transfer**  
   Shaochen Wang, Kang Chen  

@@ -9,7 +9,7 @@ Sign language recognition and translation.
 
 11 papers · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2020](#2020) · [2019](#2019) · [2017](#2017)
 
-Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [detection](detection.md) (5) · [segmentation](segmentation.md) (2) · [gesture recognition](gesture-recognition.md) (17) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (31) · [simulation](simulation.md) (2)
+Other tasks: [pose](pose.md) (15) · [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [detection](detection.md) (5) · [segmentation](segmentation.md) (2) · [gesture recognition](gesture-recognition.md) (17) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (31) · [simulation](simulation.md) (2)
 
 ## Papers
 

@@ -9,7 +9,7 @@ Temporal tracking of hands, fingertips and hand motion.
 
 8 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2022](#2022) · [2021](#2021) · [2014](#2014)
 
-Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [detection](detection.md) (5) · [segmentation](segmentation.md) (2) · [gesture recognition](gesture-recognition.md) (17) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (31) · [simulation](simulation.md) (2)
+Other tasks: [pose](pose.md) (15) · [mesh](mesh.md) (10) · [detection](detection.md) (5) · [segmentation](segmentation.md) (2) · [gesture recognition](gesture-recognition.md) (17) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (31) · [simulation](simulation.md) (2)
 
 ## Papers
 

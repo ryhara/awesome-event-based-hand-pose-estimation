@@ -9,7 +9,7 @@ Hand gesture / hand action classification.
 
 17 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2020](#2020) · [2019](#2019) · [2017](#2017) · [2014](#2014) · [2011](#2011)
 
-Other tasks: [pose](pose.md) (14) · [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [detection](detection.md) (5) · [segmentation](segmentation.md) (2) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (31) · [simulation](simulation.md) (2)
+Other tasks: [pose](pose.md) (15) · [mesh](mesh.md) (10) · [tracking](tracking.md) (8) · [detection](detection.md) (5) · [segmentation](segmentation.md) (2) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (31) · [simulation](simulation.md) (2)
 
 ## Papers
 

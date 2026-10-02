@@ -102,6 +102,15 @@
   doi: 10.1109/CVIDL70130.2026.11637781
   tags: [lightweight]
 
+- title: "RepHand: A Reparameterized Lightweight Network for Event-based Hand Pose Estimation"
+  authors: [Yu Guo, Xiaoxiao Zhang, Sishun Song, Yinong Cao, Xin He, Shouzheng Zhu, Changhui Jiang, Yuwei Chen, Shijie Liu, Jianyu Wang]
+  venue: IEEE IoT-J
+  year: 2026
+  type: journal
+  task: [pose]
+  doi: 10.1109/JIOT.2026.3730463
+  tags: [lightweight, reparameterization]
+
 - title: "Event-Enhanced Hand Behavior Modeling: Toward Robust Dexterous Hand Motion Transfer"
   authors: [Shaochen Wang, Kang Chen]
   venue: IEEE TBIOM
