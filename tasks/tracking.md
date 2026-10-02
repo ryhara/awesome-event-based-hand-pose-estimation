@@ -7,7 +7,7 @@ Temporal tracking of hands, fingertips and hand motion.
 
 [← Back to the full list](../README.md) · [Filter on the web page](https://ryhara.github.io/awesome-event-based-hands/#task=tracking)
 
-8 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2022](#2022) · [2021](#2021) · [2014](#2014)
+9 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2021](#2021) · [2014](#2014)
 
 Other tasks: [pose](pose.md) (15) · [mesh](mesh.md) (10) · [detection](detection.md) (5) · [segmentation](segmentation.md) (2) · [gesture recognition](gesture-recognition.md) (17) · [sign language](sign-language.md) (11) · [hand-object](hand-object.md) (4) · [action recognition](action-recognition.md) (2) · [dataset](dataset.md) (31) · [simulation](simulation.md) (2)
 
@@ -34,6 +34,12 @@ Other tasks: [pose](pose.md) (15) · [mesh](mesh.md) (10) · [detection](detecti
 - `IJCV 2024` **Event-Based Non-rigid Reconstruction of Low-Rank Parametrized Deformations from Contours**  
   Yuxuan Xue, Haolong Li, Stefan Leutenegger, Jörg Stückler  
   [[DOI]](https://doi.org/10.1007/s11263-024-02011-z) · Task: [mesh](mesh.md), [tracking](tracking.md)
+
+### 2023
+
+- `CVPRW 2023` **Live Demonstration: Integrating Event Based Hand Tracking Into TouchFree Interactions**  
+  Ryan Page  
+  [[DOI]](https://doi.org/10.1109/CVPRW59228.2023.00421) · Task: [tracking](tracking.md)
 
 ### 2022
 

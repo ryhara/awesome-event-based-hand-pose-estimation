@@ -7,9 +7,9 @@ A curated list of papers on **hands and event cameras**: 3D hand pose / mesh est
 
 **Searchable version (filter by year, venue, type, task, tag): https://ryhara.github.io/awesome-event-based-hands/**
 
-53 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2021](#2021) · [2020](#2020) · [2019](#2019) · [2017](#2017) · [2014](#2014) · [2011](#2011)
+54 papers · [2026](#2026) · [2025](#2025) · [2024](#2024) · [2023](#2023) · [2022](#2022) · [2021](#2021) · [2020](#2020) · [2019](#2019) · [2017](#2017) · [2014](#2014) · [2011](#2011)
 
-By task (each link is a Markdown page with only that task's papers): [pose](tasks/pose.md) (15) · [mesh](tasks/mesh.md) (10) · [tracking](tasks/tracking.md) (8) · [detection](tasks/detection.md) (5) · [segmentation](tasks/segmentation.md) (2) · [gesture recognition](tasks/gesture-recognition.md) (17) · [sign language](tasks/sign-language.md) (11) · [hand-object](tasks/hand-object.md) (4) · [action recognition](tasks/action-recognition.md) (2) · [dataset](tasks/dataset.md) (31) · [simulation](tasks/simulation.md) (2)
+By task (each link is a Markdown page with only that task's papers): [pose](tasks/pose.md) (15) · [mesh](tasks/mesh.md) (10) · [tracking](tasks/tracking.md) (9) · [detection](tasks/detection.md) (5) · [segmentation](tasks/segmentation.md) (2) · [gesture recognition](tasks/gesture-recognition.md) (17) · [sign language](tasks/sign-language.md) (11) · [hand-object](tasks/hand-object.md) (4) · [action recognition](tasks/action-recognition.md) (2) · [dataset](tasks/dataset.md) (31) · [simulation](tasks/simulation.md) (2)
 
 ## Papers
 
@@ -160,6 +160,10 @@ By task (each link is a Markdown page with only that task's papers): [pose](task
 - `J. Manuf. Syst. 2023` **Classification of Primitive Manufacturing Tasks from Filtered Event Data**  
   Laura Duarte, Pedro Neto  
   [[DOI]](https://doi.org/10.1016/j.jmsy.2023.03.001) [[arXiv]](https://arxiv.org/abs/2303.09558) · Task: [hand-object](tasks/hand-object.md)
+
+- `CVPRW 2023` **Live Demonstration: Integrating Event Based Hand Tracking Into TouchFree Interactions**  
+  Ryan Page  
+  [[DOI]](https://doi.org/10.1109/CVPRW59228.2023.00421) · Task: [tracking](tasks/tracking.md)
 
 - `arXiv 2023` **EvPlug: Learn a Plug-and-Play Module for Event and Image Fusion**  
   Jianping Jiang, Xinyu Zhou, Peiqi Duan, Boxin Shi  

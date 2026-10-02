@@ -372,6 +372,15 @@
   arxiv: 2303.09558
   tags: [manufacturing]
 
+- title: "Live Demonstration: Integrating Event Based Hand Tracking Into TouchFree Interactions"
+  authors: [Ryan Page]
+  venue: CVPRW
+  year: 2023
+  type: workshop
+  task: [tracking]
+  doi: 10.1109/CVPRW59228.2023.00421
+  tags: [tracking]
+
 - title: "EvPlug: Learn a Plug-and-Play Module for Event and Image Fusion"
   authors: [Jianping Jiang, Xinyu Zhou, Peiqi Duan, Boxin Shi]
   venue: arXiv
